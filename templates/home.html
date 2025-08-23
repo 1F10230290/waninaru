@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>トップページ</title>
+</head>
+<body>
+    <h1>ようこそ Irokumo へ ✨</h1>
+
+    {% if user.is_authenticated %}
+        <p>{{ user.email }} でログイン中です</p>
+        <a href="{% url 'mypage' %}">マイページ</a>
+        <form method="post" action="{% url 'logout' %}">
+            {% csrf_token %}
+            <button type="submit">ログアウト</button>
+        </form>
+    {% else %}
+        <a href="{% url 'signup' %}">アカウント作成</a><br>
+        <a href="{% url 'login' %}">ログイン</a>
+    {% endif %}
+</body>
+</html>

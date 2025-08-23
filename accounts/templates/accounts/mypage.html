@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>マイページ</title>
+</head>
+<body>
+    <h2>マイページ</h2>
+
+    <p>名前：{{ profile.name }}</p>
+    {% if profile.icon %}
+        <p><img src="{{ profile.icon.url }}" alt="アイコン" width="100"></p>
+    {% endif %}
+    <p>一言：{{ profile.bio }}</p>
+    <p>役職：{{ profile.get_role_display }}</p>
+
+    <a href="{% url 'profile_setup' %}">変更する</a><br>
+    <a href="{% url 'home' %}">トップに戻る</a>
+</body>
+</html>
