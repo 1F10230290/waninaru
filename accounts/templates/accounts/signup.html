@@ -31,6 +31,7 @@
         <!-- パスワード -->
         <p>
             {{ form.password1.label_tag }}<br>
+            パスワードは大文字・小文字・数字を含めた10文字以上にしてください<br>
             {{ form.password1 }}<br>
             {% if form.password1.errors %}
                 <ul class="errorlist">
