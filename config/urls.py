@@ -25,3 +25,6 @@ urlpatterns = [
     path('', views.home, name='home'),             # トップページ
     path('accounts/', include('accounts.urls')),   # accounts アプリの URL をまとめてインクルード
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
