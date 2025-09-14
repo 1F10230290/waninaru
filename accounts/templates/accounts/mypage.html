@@ -14,7 +14,24 @@
     <p>一言：{{ profile.bio }}</p>
     <p>役職：{{ profile.get_role_display }}</p>
 
+    <!--機能未実装-->
+    <p>いいねした投稿：現在ありません<p>
+
     <a href="{% url 'profile_setup' %}">変更する</a><br>
-    <a href="{% url 'home' %}">トップに戻る</a>
+
+    {% if user.is_authenticated %}
+        {% if user.profile.role == "supporter" %}
+            <p><a href="{% url 'supporter_dashboard' %}">トップに戻る</a></p>
+        {% elif user.profile.role == "creator" %}
+            <p><a href="{% url 'creator_dashboard' %}">トップに戻る</a></p>
+        {% elif user.profile.role == "craftsman" %}
+            <p><a href="{% url 'craftsman_dashboard' %}">トップに戻る</a></p>
+        {% else %}
+            <p><a href="{% url 'home' %}">トップに戻る</a></p>
+        {% endif %}
+    {% else %}
+        <p><a href="{% url 'home' %}">トップに戻る</a></p>
+    {% endif %}
+
 </body>
 </html>

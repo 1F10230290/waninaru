@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>サポータートップページ</title>
+</head>
+<body>
+    <h1>サポータートップページです</h1>
+
+    <p>{{ user.profile.name|default:user.email }} でログイン中です</p>
+    <a href="{% url 'mypage' %}">マイページ</a>
+    <form method="post" action="{% url 'logout' %}">
+        {% csrf_token %}
+        <button type="submit">ログアウト</button>
+    </form>
+</body>
+</html>
