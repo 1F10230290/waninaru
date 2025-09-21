@@ -19,5 +19,7 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('',include('introduction.urls')) #トップページをintroductionに
+    path('', include('core.urls')), #トップページをcoreに
+    path('introduction/',include('introduction.urls')),
+    path('aidea/',include('aidea.urls')),
 ]
