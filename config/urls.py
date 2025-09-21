@@ -19,7 +19,7 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('core.urls')), #トップページをcoreに
+    path('', include('core.urls')), #トップページ(http://127.0.0.1:8000/)をcoreにしている。
     path('introduction/',include('introduction.urls')),
     path('aidea/',include('aidea.urls')),
 ]
