@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>プロフィール設定</title>
+</head>
+<body>
+    <h2>プロフィール設定</h2>
+
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <!-- 名前 -->
+        <p>
+            {{ form.name.label_tag }}<br>
+            {{ form.name }}<br>
+            {% for error in form.name.errors %}
+                <span style="color:red">{{ error }}</span><br>
+            {% endfor %}
+        </p>
+
+        <!-- アイコン -->
+        <p>
+            <label for="id_icon">アイコン画像：</label><br>
+
+            {% if form.instance.icon %}
+                現在の画像：
+                <a href="{{ form.instance.icon.url }}" target="_blank">
+                    {{ form.instance.icon.name }}
+                </a><br>
+
+                <input type="checkbox" name="icon-clear" id="icon-clear_id">
+                <label for="icon-clear_id">画像を削除する</label><br>
+            {% endif %}
+
+            新しい画像に変更：
+            <input type="file" name="icon" accept="image/*" id="id_icon"><br>
+            {% for error in form.icon.errors %}
+                <span style="color:red">{{ error }}</span><br>
+            {% endfor %}
+        </p>
+
+        <!-- 一言 -->
+        <p>
+            {{ form.bio.label_tag }}<br>
+            {{ form.bio }}<br>
+            {% for error in form.bio.errors %}
+                <span style="color:red">{{ error }}</span><br>
+            {% endfor %}
+        </p>
+
+        <!-- 役職 -->
+        <p>
+            {{ form.role.label_tag }}<br>
+            {{ form.role }}<br>
+            {% for error in form.role.errors %}
+                <span style="color:red">{{ error }}</span><br>
+            {% endfor %}
+        </p>
+
+        <button type="submit">登録する</button>
+    </form>
+
+    <br>
+    <a href="{% url 'mypage' %}">戻る</a>
+</body>
+</html>

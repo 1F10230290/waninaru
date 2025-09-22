@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>ログイン</title>
+</head>
+<body>
+    <h2>ログイン</h2>
+
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">ログイン</button>
+    </form>
+
+    <!-- パスワードを忘れた場合のリンク -->
+    <!-- setting.pyの設定で実際にメールは送らず、ターミナルに表示される -->
+    <p><a href="{% url 'password_reset' %}">パスワードを忘れた場合はこちら</a></p>
+
+    <!-- 新規アカウント作成リンク -->
+    <p><a href="{% url 'signup' %}">新規アカウント作成</a></p>
+</body>
+</html>
