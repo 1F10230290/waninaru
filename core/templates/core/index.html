@@ -4,7 +4,20 @@
     <title>Introduction</title>
 </head>
 <body>
-    <h1>トップページ（白紙）</h1>
-    <p>ここに立ち上げ画面やログイン/アカウント作成ができるページを作っていきます。</p>
+    <h1>ようこそ waninaru へ</h1>
+
+    <!-- ログインしている場合 -->
+    {% if user.is_authenticated %}
+        <p>{{ user.profile.name|default:user.email }} でログイン中です</p>
+        <a href="{% url 'mypage' %}">マイページ</a>
+        <form method="post" action="{% url 'logout' %}">
+            {% csrf_token %}
+            <button type="submit">ログアウト</button>
+        </form>
+    <!-- ログインしていない場合 -->
+    {% else %}
+        <a href="{% url 'signup' %}">アカウント作成</a><br>
+        <a href="{% url 'login' %}">ログイン</a>
+    {% endif %}
 </body>
 </html>
