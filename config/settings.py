@@ -119,7 +119,7 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 # settings.py
 import os
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+BASE_DIR = Path(__file__).resolve().parent.parent
 
-MEDIA_ROOT = 'media'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'

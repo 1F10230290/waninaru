@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 
+
 # カスタムユーザーモデル
 class CustomUser(AbstractUser):
     # メールアドレスを一意のIDとして使用
@@ -45,6 +46,7 @@ class Profile(models.Model):
 
     # ユーザーアイコン画像
     icon = models.ImageField(upload_to='icons/', blank=True, null=True)
+    uploaded_at = models.DateTimeField(auto_now_add=True)
 
     # 自己紹介文
     bio = models.TextField(max_length=200, blank=True)
