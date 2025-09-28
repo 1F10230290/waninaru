@@ -29,4 +29,5 @@ urlpatterns = [
         template_name="accounts/creator_dashboard.html")), name="creator_dashboard"),
     path("craftsman/dashboard/", login_required(TemplateView.as_view(
         template_name="accounts/craftsman_dashboard.html")), name="craftsman_dashboard"),
+    path('craftsman/register/', views.register_craftsman, name='register_craftsman'),
 ]

@@ -14,10 +14,29 @@
     <p>一言：{{ profile.bio }}</p>
     <p>役職：{{ profile.get_role_display }}</p>
 
+    {% if profile.role == 'craftsman' %}
+        <p>工芸士情報: {{ craftsman_status }}</p>
+
+        {% if craftsman_status == "未登録" %}
+            <a href="{% url 'register_craftsman' %}">情報を登録する</a>
+        {% else %}
+            <ul>
+                <li>専門分野: {{ craftsman_info.specialty }}</li>
+                <li>経験年数: {{ craftsman_info.experience_years }}年</li>
+                <li>工房所在地: {{ craftsman_info.workshop_location }}</li>
+                <li>自己紹介: {{ craftsman_info.bio }}</li>
+            </ul>
+        {% endif %}
+    {% endif %}
+
     <!--機能未実装-->
     <p>いいねした投稿：現在ありません<p>
 
     <a href="{% url 'profile_setup' %}">変更する</a><br>
+
+    {% if profile.role == 'craftsman' %}
+    <a href="{% url 'register_craftsman' %}">工芸士情報登録を変更する</a><br>
+    {% endif %}
 
     {% if user.is_authenticated %}
         {% if user.profile.role == "supporter" %}

@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
-from .models import CustomUser, Profile
+from .models import CustomUser, Profile, CraftsmanProfile
 import re
 
 # ユーザー登録フォーム (CustomUser用)
@@ -67,8 +67,13 @@ class SignUpForm(UserCreationForm):
 
 
 # プロフィール編集フォーム (Profileモデル用)
-
 class ProfileForm(forms.ModelForm):
     class Meta:
         model = Profile  # このフォームは Profile モデルを利用
         fields = ['name', 'icon', 'bio', 'role']  # 編集可能なフィールド
+
+# 工芸士情報登録フォーム
+class CraftsmanProfileForm(forms.ModelForm):
+    class Meta:
+        model = CraftsmanProfile
+        fields = ['specialty', 'experience_years', 'workshop_location', 'bio']

@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate
-from .forms import SignUpForm, ProfileForm
-from .models import Profile
+from .forms import SignUpForm, ProfileForm, CraftsmanProfileForm
+from .models import Profile, CraftsmanProfile
 from django.contrib.auth.views import LoginView
 
 # サインアップ用ビュー
@@ -24,16 +24,7 @@ def profile_setup_view(request):
         form = ProfileForm(request.POST, request.FILES, instance=profile)
         if form.is_valid():
             profile = form.save()
-
-            # 役割ごとにリダイレクト先を変える
-            if profile.role == 'supporter':
-                return redirect('supporter_dashboard')
-            elif profile.role == 'creator':
-                return redirect('creator_dashboard')
-            elif profile.role == 'craftsman':
-                return redirect('craftsman_dashboard')
-
-            return redirect('home')  # どの役割でもない場合のフォールバック
+            return redirect('mypage')
     else:
         form = ProfileForm(instance=profile)
 
@@ -53,9 +44,45 @@ class CustomLoginView(LoginView):
             return '/accounts/craftsman/dashboard/'
         return '/'
 
-# マイページ用ビュー
+# マイページ用
 def mypage_view(request):
-    # ユーザーに紐づく Profile を取得
     profile = Profile.objects.get(user=request.user)
-    # テンプレートに profile を渡す
-    return render(request, 'accounts/mypage.html', {'profile': profile})
+
+    craftsman_status = None
+    craftsman_info = None  # 工芸士情報も渡す
+
+    if profile.role == 'craftsman':
+        try:
+            craftsman_info = profile.craftsman_info
+            craftsman_status = "工芸士登録済み" if craftsman_info.registered else "未登録"
+        except CraftsmanProfile.DoesNotExist:
+            craftsman_status = "未登録"
+
+    return render(
+        request,
+        'accounts/mypage.html',
+        {
+            'profile': profile,
+            'craftsman_status': craftsman_status,
+            'craftsman_info': craftsman_info
+        }
+    )
+
+# 工芸士情報登録
+def register_craftsman(request):
+    profile = request.user.profile
+
+    # 既に CraftsmanProfile がある場合は取得、なければ新規作成
+    craftsman_info, created = CraftsmanProfile.objects.get_or_create(profile=profile)
+
+    if request.method == 'POST':
+        form = CraftsmanProfileForm(request.POST, instance=craftsman_info)
+        if form.is_valid():
+            craftsman = form.save(commit=False)
+            craftsman.registered = True  # 本登録にする
+            craftsman.save()
+            return redirect('mypage')  # マイページに戻る
+    else:
+        form = CraftsmanProfileForm(instance=craftsman_info)
+
+    return render(request, 'accounts/register_craftsman.html', {'form': form})

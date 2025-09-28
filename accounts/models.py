@@ -31,7 +31,6 @@ class CustomUser(AbstractUser):
     )
 
 # ユーザープロフィールモデル
-
 class Profile(models.Model):
     # ユーザーの役割の選択肢
     ROLE_CHOICES = [
@@ -56,3 +55,16 @@ class Profile(models.Model):
     # ユーザーの役割
     role = models.CharField(max_length=20, choices=ROLE_CHOICES)
 
+# 工芸士情報
+class CraftsmanProfile(models.Model):
+    profile = models.OneToOneField(
+        'Profile', on_delete=models.CASCADE, related_name='craftsman_info'
+    )
+    specialty = models.CharField("専門分野", max_length=100, blank=True)
+    experience_years = models.PositiveIntegerField("経験年数", blank=True, null=True)
+    workshop_location = models.CharField("工房の所在地", max_length=200, blank=True)
+    bio = models.TextField("自己紹介", max_length=500, blank=True)
+    registered = models.BooleanField(default=False)  # 本登録フラグ
+
+    def __str__(self):
+        return f"{self.profile.name}の工芸士情報"

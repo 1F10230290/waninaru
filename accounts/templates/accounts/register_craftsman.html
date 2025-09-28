@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>工芸士情報登録</title>
+</head>
+<body>
+    <h1>工芸士情報登録</h1>
+
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">登録する</button>
+    </form>
+
+    <a href="{% url 'mypage' %}">マイページに戻る</a>
+</body>
