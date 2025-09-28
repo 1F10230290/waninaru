@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+from storages.backends.s3boto3 import S3Boto3Storage
 
+s3_storage = S3Boto3Storage()
 
 # カスタムユーザーモデル
 class CustomUser(AbstractUser):
@@ -45,7 +47,7 @@ class Profile(models.Model):
     name = models.CharField(max_length=50)
 
     # ユーザーアイコン画像
-    icon = models.ImageField(upload_to='icons/', blank=True, null=True)
+    icon = models.ImageField(upload_to='icons/', storage=s3_storage, blank=True, null=True)
     uploaded_at = models.DateTimeField(auto_now_add=True)
 
     # 自己紹介文
