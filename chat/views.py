@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 from .models import Room, Message
 from accounts.models import CustomUser
 from django.http import JsonResponse
+from django.utils import timezone
 
 # チャットルームの作成
 @login_required
@@ -69,10 +70,15 @@ def send_message(request, room_name):
         content = request.POST.get('message', '').strip()
         if content:
             msg = Message.objects.create(room=room, sender=request.user, content=content)
+
+            # 日本時間に変換
+            jp_time = timezone.localtime(msg.timestamp)
+            formatted_time = jp_time.strftime("%m/%d %H:%M")  # 月/日 時:分
+
             return JsonResponse({
                 "username": msg.sender.profile.name,
                 "message": msg.content,
-                "timestamp": msg.timestamp.strftime("%H:%M:%S")
+                "timestamp": formatted_time
             })
     return JsonResponse({"error": "Invalid request"}, status=400)
 
@@ -103,7 +109,7 @@ def delete_chat_room(request, room_name):
     if request.method == "POST":
         room.delete()
         messages.success(request, "チャットルームを削除しました。")
-        return redirect("index")  # 削除後のリダイレクト先（トップなど）
+        return redirect("active_chat_rooms")  # 削除後のリダイレクト先（トップなど）
 
     return render(request, "chat/confirm_delete.html", {"room": room})
 

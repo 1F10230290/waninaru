@@ -97,7 +97,6 @@ from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from .models import Profile
 
-@login_required
 def user_list_view(request):
     query = request.GET.get('q', '').strip()  # 名前検索
     role_filter = request.GET.get('role', '').strip()  # 役割絞り込み
