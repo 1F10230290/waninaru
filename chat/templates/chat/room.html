@@ -1,0 +1,54 @@
+<h2>チャットルーム: {{ request.user.profile.name }} と {{ other_name }} のチャット</h2>
+<div id="chat-log"></div>
+<input id="chat-message-input" type="text" size="100">
+<button id="chat-message-submit">送信</button>
+<form action="{% url 'delete_chat_room' room_name=room_name %}" method="post" style="margin-top: 1em;" onsubmit="return confirm('本当にこのチャットルームを削除しますか？');">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger">チャットルームを削除する</button>
+</form>
+<p><a href="{% url 'active_chat_rooms' %}">一覧に戻る</a></p>
+
+
+<script>
+const roomName = "{{ room_name }}";
+const chatLog = document.getElementById('chat-log');
+const input = document.getElementById('chat-message-input');
+
+// メッセージを表示
+function addMessage(username, message, timestamp){
+    chatLog.innerHTML += `<p><b>${username} [${timestamp}]:</b> ${message}</p>`;
+}
+
+// サーバーからメッセージ取得
+async function fetchMessages(){
+    const res = await fetch(`/chat/room/${roomName}/get/`);
+    const data = await res.json();
+    chatLog.innerHTML = "";
+    data.forEach(msg => addMessage(msg.username, msg.message, msg.timestamp));
+}
+
+
+// ページ読み込み時に即取得
+fetchMessages();
+
+// 送信ボタン
+document.getElementById('chat-message-submit').onclick = async function(){
+    if(input.value.trim() === "") return;
+
+    const formData = new FormData();
+    formData.append('message', input.value);
+
+    const res = await fetch(`/chat/room/${roomName}/send/`, {
+        method: 'POST',
+        headers: { 'X-CSRFToken': '{{ csrf_token }}' },
+        body: formData
+    });
+    const data = await res.json();
+    if(!data.error){
+        addMessage(data.username, data.message, data.timestamp);
+        input.value = '';
+    }
+};
+</script>
+
+

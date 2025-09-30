@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>ユーザー一覧</title>
+</head>
+<body>
+    <h2>ユーザー一覧</h2>
+
+    <!-- 検索フォーム -->
+    <form method="get" action="{% url 'user_list' %}">
+        <input type="text" name="q" placeholder="名前で検索" value="{{ query }}">
+
+        <select name="role">
+            <option value="">すべての役割</option>
+            {% for r_value, r_label in ROLE_CHOICES %}
+                <option value="{{ r_value }}" {% if role == r_value %}selected{% endif %}>
+                    {{ r_label }}
+                </option>
+            {% endfor %}
+        </select>
+
+        <button type="submit">検索</button>
+        <button type="submit" onclick="this.form.role.value=''; this.form.q.value='';">すべて表示</button>
+    </form>
+
+    <!-- 役割ごとにユーザーを表示 -->
+    {% for role_label, profiles in users_by_role.items %}
+        <h3>{{ role_label }}</h3>
+        <ul>
+            {% for profile in profiles %}
+                <li>
+                    {{ profile.name }}
+
+                    <!-- ログインユーザーが工芸士で、表示中のユーザーがクリエイターならチャット開始ボタン -->
+                    {% if request.user.profile.role == "craftsman" and profile.role == "creator" %}
+                        <form method="post" action="{% url 'start_chat_by_craftsman' creator_id=profile.user.id %}">
+                            {% csrf_token %}
+                            <button type="submit">チャット開始</button>
+                        </form>
+                    {% endif %}
+                </li>
+            {% empty %}
+                <li>該当ユーザーはいません</li>
+            {% endfor %}
+        </ul>
+    {% endfor %}
+
+    {% if user.is_authenticated %}
+        {% if user.profile.role == "supporter" %}
+            <p><a href="{% url 'supporter_dashboard' %}">トップに戻る</a></p>
+        {% elif user.profile.role == "creator" %}
+            <p><a href="{% url 'creator_dashboard' %}">トップに戻る</a></p>
+        {% elif user.profile.role == "craftsman" %}
+            <p><a href="{% url 'craftsman_dashboard' %}">トップに戻る</a></p>
+        {% endif %}
+    {% else %}
+        <p><a href="{% url 'home' %}">トップに戻る</a></p>
+    {% endif %}
+</body>
+</html>

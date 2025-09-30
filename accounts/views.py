@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth import login, authenticate
+from django.contrib.auth import login
 from .forms import SignUpForm, ProfileForm, CraftsmanProfileForm
 from .models import Profile, CraftsmanProfile
 from django.contrib.auth.views import LoginView
@@ -86,3 +86,35 @@ def register_craftsman(request):
         form = CraftsmanProfileForm(instance=craftsman_info)
 
     return render(request, 'accounts/register_craftsman.html', {'form': form})
+
+def craftsman_list_view(request):
+    # role が 'craftsman' のユーザーのみ取得
+    craftsmen = Profile.objects.filter(role='craftsman')
+    return render(request, 'accounts/craftsman_list.html', {'craftsmen': craftsmen})
+
+# ユーザー一覧機能
+from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
+from .models import Profile
+
+@login_required
+def user_list_view(request):
+    query = request.GET.get('q', '').strip()  # 名前検索
+    role_filter = request.GET.get('role', '').strip()  # 役割絞り込み
+
+    users_by_role = {}
+    for role_value, role_label in Profile.ROLE_CHOICES:
+        qs = Profile.objects.filter(role=role_value)
+        # GETで指定されている役割だけに絞る
+        if role_filter and role_filter != role_value:
+            continue
+        if query:
+            qs = qs.filter(name__icontains=query)
+        users_by_role[role_label] = qs
+
+    return render(request, 'accounts/user_list.html', {
+        'users_by_role': users_by_role,
+        'query': query,
+        'role': role_filter,
+        'ROLE_CHOICES': Profile.ROLE_CHOICES
+    })

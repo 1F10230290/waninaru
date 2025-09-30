@@ -18,7 +18,7 @@
         <p>工芸士情報: {{ craftsman_status }}</p>
 
         {% if craftsman_status == "未登録" %}
-            <a href="{% url 'register_craftsman' %}">情報を登録する</a>
+            <a href="{% url 'register_craftsman' %}">工芸士情報を登録する</a>
         {% else %}
             <ul>
                 <li>専門分野: {{ craftsman_info.specialty }}</li>
@@ -34,8 +34,8 @@
 
     <a href="{% url 'profile_setup' %}">変更する</a><br>
 
-    {% if profile.role == 'craftsman' %}
-    <a href="{% url 'register_craftsman' %}">工芸士情報登録を変更する</a><br>
+    {% if profile.role == 'craftsman' and craftsman_status != "未登録" %}
+        <a href="{% url 'register_craftsman' %}">工芸士情報登録を変更する</a><br>
     {% endif %}
 
     {% if user.is_authenticated %}
@@ -45,8 +45,6 @@
             <p><a href="{% url 'creator_dashboard' %}">トップに戻る</a></p>
         {% elif user.profile.role == "craftsman" %}
             <p><a href="{% url 'craftsman_dashboard' %}">トップに戻る</a></p>
-        {% else %}
-            <p><a href="{% url 'home' %}">トップに戻る</a></p>
         {% endif %}
     {% else %}
         <p><a href="{% url 'home' %}">トップに戻る</a></p>

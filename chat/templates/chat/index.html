@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>現在進行中のチャットルーム</title>
+</head>
+<body>
+    <h2>現在進行中のチャットルーム</h2>
+
+    {% if rooms %}
+        <ul>
+        {% for room in rooms %}
+            <li>
+                <a href="{% url 'chat_room' room_name=room.name %}">
+                    {{ room.other_name }} とのチャット
+                </a>
+            </li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>参加中のチャットルームはありません。</p>
+    {% endif %}
+
+
+    {% if user.profile.role == "supporter" %}
+        <p><a href="{% url 'supporter_dashboard' %}">トップに戻る</a></p>
+    {% elif user.profile.role == "creator" %}
+        <p><a href="{% url 'creator_dashboard' %}">トップに戻る</a></p>
+    {% elif user.profile.role == "craftsman" %}
+        <p><a href="{% url 'craftsman_dashboard' %}">トップに戻る</a></p>
+    {% endif %}
+
+</body>
+</html>
