@@ -1,0 +1,15 @@
+{% load static %} 
+{% csrf_token %}
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>工芸品デザイン</title>
+    <script src="{% static 'aidea/design.js' %}" defer></script>
+</head>
+<body>
+    <h1>工芸品デザイン</h1>
+    <button id="generate-btn">注意点を生成</button>
+    <div id="result"></div>
+</body>
+</html>
