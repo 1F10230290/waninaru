@@ -85,8 +85,28 @@ document.addEventListener("DOMContentLoaded", () => {
     const suggestBtns = document.querySelectorAll(".suggest-btn");
     suggestBtns.forEach(btn => {
         btn.addEventListener("click", () => {
-            const question = btn.dataset.question; // data-question属性の内容
-            sendMessage(question);
+            const command = btn.dataset.command;
+            const itemName = btn.dataset.itemName;
+            
+            let finalPrompt = "";
+
+            if (command === "drawing_tips") {
+                // ▼▼▼ この「超具体的な指示」をAIに送る ▼▼▼
+                finalPrompt = `# 指示
+                私はアマチュアクリエイターです。
+                「${itemName}」の表面に描くためのデザイン案を、立体的なイラストとして描きたいです。
+                その描き方の手順を、プロのデザイナーが初心者に教えるように、専門用語を使わずにステップバイステップ形式でアドバイスしてください。
+
+                # 守ってほしい手順
+                - **ステップ1**では、まず「${itemName}」そのものの形を立体図として描く方法を説明してください。例えば、お椀ならその丸みや高台の描き方、お皿ならその深さや縁の表現方法などです。
+                - その後、構図の取り方や、曲面に模様をうまく乗せるコツなどを重点的に教えてください。また、${itemName}で可能な表現についても教えて下さい。
+                - あなたが持つべき役割や制約条件は、システムプロンプトの指示に厳密に従ってください。
+                `;
+            }
+
+            if (finalPrompt) {
+                sendMessage(finalPrompt);
+            }
         });
     });
 });
