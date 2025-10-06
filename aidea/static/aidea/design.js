@@ -27,7 +27,7 @@ function renderChat() {
     messages.forEach(msg => {
         const div = document.createElement("div");
         div.className = msg.role === "user" ? "user-message" : "assistant-message";
-        div.textContent = msg.content;
+        div.innerHTML = marked.parse(msg.content);
         chatBox.appendChild(div);
     });
 

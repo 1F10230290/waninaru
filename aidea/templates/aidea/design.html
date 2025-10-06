@@ -7,13 +7,14 @@
     <title>工芸品デザイン</title>
     <script src="{% static 'aidea/design.js' %}" defer></script>
     <link rel="stylesheet" href="{% static 'aidea/design.css' %}">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 </head>
 <body>
     <h1>工芸品デザイン</h1>
     <h2>注意点</h2>
     
     <!--推奨質問のボタン-->
-    <button class="suggest-btn" data-question="{{ item_name }}の描き方のコツを教えて下さい">描き方のコツを聞く</button>
+    <button class="suggest-btn" data-question="{{ item_name }}のデザインの描き方をステップバイステップで丁寧に教えて下さい。">描き方のコツを聞く</button>
     
     <!--チャット欄-->
     <div id="chat-box"></div>

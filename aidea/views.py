@@ -30,12 +30,36 @@ def design(request):
 def generate(request):
     if request.method == 'POST':
         data = json.loads(request.body)
+        #1 フロントエンドから現在の会話履歴を受け取る
         messages = data.get('messages', [])
+
+        #2 AIの基本設定となるシステムプロンプトを作成する
+        system_prompt={
+            "role": "system",
+            "content": """
+        あなたは日本の伝統工芸品のデザインを支援する、親切なAIアシスタントです。
+
+        # あなたの役割
+        - ユーザーのデザインアイデアを褒めて、創造性を引き出す手助けをします。
+        - 質問には、専門用語を避け、初心者にも分かりやすい言葉で回答します。
+
+        # 制約条件
+        - 回答は常に300文字以内の簡潔なものにしてください。
+        - ユーザーを決して否定せず、ポジティブな言葉遣いを徹底してください。
+        - 箇条書きを使うと分かりやすい場合は、積極的に使用してください。
+        - 箇条書きや太字など、Markdown形式を積極的に使用して分かりやすく説明してください。
+        - 箇条書きを使う際は、各項目の先頭にハイフン(-)をつけ、必ず改行してください。
+        """
+        }
+
+        #会話の履歴を先頭にプロンプトを挿入する
+        messages_with_system_prompt = [system_prompt] + messages
 
         #ここでAIに送っている
         response = client.chat.completions.create(
             model="gpt-3.5-turbo",
-            messages=messages
+            messages=messages_with_system_prompt,
+            max_tokens=350
         )
         
         #フロントJSにデータを返す
