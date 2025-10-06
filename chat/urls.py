@@ -9,4 +9,11 @@ urlpatterns = [
     path('room/<str:room_name>/get/', views.get_messages, name='get_messages'),
     path("room/<str:room_name>/delete/", views.delete_chat_room, name="delete_chat_room"),
     path("", views.active_chat_rooms, name="active_chat_rooms"),
+    path('users/<int:creator_id>/send_scout/', views.send_scout_view, name='send_scout'),
+    # スカウト通知
+    path('scout/notifications/', views.scout_notifications, name='scout_notifications'),
+
+# スカウト承認
+    path('scout/accept/<int:scout_id>/', views.accept_scout, name='accept_scout'),
+
 ]

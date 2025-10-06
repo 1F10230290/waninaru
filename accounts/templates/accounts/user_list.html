@@ -28,21 +28,16 @@
     {% for role_label, profiles in users_by_role.items %}
         <h3>{{ role_label }}</h3>
         <ul>
-            {% for profile in profiles %}
-                <li>
-                    {{ profile.name }}
-
-                    <!-- ログインユーザーが工芸士で、表示中のユーザーがクリエイターならチャット開始ボタン -->
+        {% for profile in profiles %}
+            <li>
+                <a href="{% url 'user_profile' user_id=profile.user.id %}">{{ profile.name }}</a>
                     {% if request.user.profile.role == "craftsman" and profile.role == "creator" %}
-                        <form method="post" action="{% url 'start_chat_by_craftsman' creator_id=profile.user.id %}">
-                            {% csrf_token %}
-                            <button type="submit">チャット開始</button>
-                        </form>
+                        | <a href="{% url 'send_scout' creator_id=profile.user.id %}">スカウトを送る</a>
                     {% endif %}
-                </li>
-            {% empty %}
-                <li>該当ユーザーはいません</li>
-            {% endfor %}
+            </li>
+        {% empty %}
+            <li>該当ユーザーはいません</li>
+        {% endfor %}
         </ul>
     {% endfor %}
 

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ profile.name }} さんのプロフィール</title>
+</head>
+<body>
+    <h2>{{ profile.name }} さんのプロフィール</h2>
+
+    <p>名前：{{ profile.name }}</p>
+    {% if profile.icon %}
+        <p><img src="{{ profile.icon.url }}" alt="アイコン" width="100"></p>
+    {% endif %}
+    <p>一言：{{ profile.bio }}</p>
+    <p>役職：{{ profile.get_role_display }}</p>
+
+    {% if profile.role == 'craftsman' %}
+        <p>工芸士情報: {{ craftsman_status }}</p>
+
+        {% if craftsman_status == "登録" %}
+            <ul>
+                <li>専門分野: {{ craftsman_info.specialty }}</li>
+                <li>経験年数: {{ craftsman_info.experience_years }}年</li>
+                <li>工房所在地: {{ craftsman_info.workshop_location }}</li>
+                <li>自己紹介: {{ craftsman_info.bio }}</li>
+            </ul>
+        {% endif %}
+    {% endif %}
+
+    <a href="javascript:history.back()">戻る</a>
+</body>

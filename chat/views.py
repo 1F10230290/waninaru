@@ -1,9 +1,10 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
-from .models import Room, Message
+from chat.models import Room, Message, ScoutOffer
 from accounts.models import CustomUser
 from django.http import JsonResponse
 from django.utils import timezone
+from django.contrib import messages
 
 # チャットルームの作成
 @login_required
@@ -87,15 +88,16 @@ def send_message(request, room_name):
 def get_messages(request, room_name):
     room = Room.objects.get(name=room_name)
     messages = room.messages.order_by('timestamp')
-    data = [
-        {"username": m.sender.profile.name, "message": m.content, "timestamp": m.timestamp.strftime("%H:%M:%S")}
-        for m in messages
-    ]
+    data = []
+    for m in messages:
+        jp_time = timezone.localtime(m.timestamp)
+        formatted_time = jp_time.strftime("%m/%d %H:%M")  # ← send_messageと統一
+        data.append({
+            "username": m.sender.profile.name,
+            "message": m.content,
+            "timestamp": formatted_time
+        })
     return JsonResponse(data, safe=False)
-
-from django.shortcuts import render
-
-from django.contrib import messages
 
 # チャットルームの削除
 @login_required
@@ -133,3 +135,44 @@ def active_chat_rooms(request):
         })
 
     return render(request, "chat/index.html", {"rooms": room_list})
+
+# スカウト送信
+@login_required
+def send_scout_view(request, creator_id):
+    creator = get_object_or_404(CustomUser, id=creator_id)
+
+    if request.method == 'POST':
+        message = request.POST.get('message', '').strip()
+        if message:
+            ScoutOffer.objects.create(
+                craftsman=request.user,
+                creator=creator,
+                message=message
+            )
+            return redirect('user_list')  # 送信後はユーザー一覧に戻る
+
+    return render(request, 'chat/send_scout.html', {'creator': creator})
+
+# スカウト通知
+@login_required
+def scout_notifications(request):
+    received_scouts = ScoutOffer.objects.filter(creator=request.user, accepted=False)
+    return render(request, "chat/scout_notice.html", {"received_scouts": received_scouts})
+
+
+@login_required
+def accept_scout(request, scout_id):
+    scout = get_object_or_404(ScoutOffer, id=scout_id, creator=request.user)
+    scout.accepted = True
+    scout.responded_at = timezone.now()
+    scout.save()
+
+    # チャットルーム作成
+    room_name = f"{scout.creator.id}_{scout.craftsman.id}"
+    room, created = Room.objects.get_or_create(
+        name=room_name,
+        defaults={"creator": scout.creator, "craftsman": scout.craftsman}
+    )
+
+    return redirect("chat_room", room_name=room.name)
+

@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>スカウト送信</title>
+</head>
+<body>
+    <h2>{{ creator.profile.name }} にスカウトを送る</h2>
+
+    <form method="post">
+        {% csrf_token %}
+        <textarea name="message" rows="5" cols="40" placeholder="スカウトメッセージを入力"></textarea><br>
+        <button type="submit">送信</button>
+    </form>
+
+    <p><a href="{% url 'user_list' %}">ユーザー一覧に戻る</a></p>
+</body>
+</html>

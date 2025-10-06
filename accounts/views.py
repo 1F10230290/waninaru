@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login
 from .forms import SignUpForm, ProfileForm, CraftsmanProfileForm
 from .models import Profile, CraftsmanProfile
@@ -93,10 +93,6 @@ def craftsman_list_view(request):
     return render(request, 'accounts/craftsman_list.html', {'craftsmen': craftsmen})
 
 # ユーザー一覧機能
-from django.shortcuts import render
-from django.contrib.auth.decorators import login_required
-from .models import Profile
-
 def user_list_view(request):
     query = request.GET.get('q', '').strip()  # 名前検索
     role_filter = request.GET.get('role', '').strip()  # 役割絞り込み
@@ -116,4 +112,24 @@ def user_list_view(request):
         'query': query,
         'role': role_filter,
         'ROLE_CHOICES': Profile.ROLE_CHOICES
+    })
+
+# 他ユーザーのプロフィールを取得
+def user_profile_view(request, user_id):
+    profile = get_object_or_404(Profile, user__id=user_id)
+
+    craftsman_info = None
+    craftsman_status = "未登録"
+
+    if profile.role == "craftsman":
+        try:
+            craftsman_info = profile.craftsman_info
+            craftsman_status = "工芸士登録済み" if craftsman_info.registered else "未登録"
+        except CraftsmanProfile.DoesNotExist:
+            craftsman_status = "未登録"
+
+    return render(request, 'accounts/user_profile.html', {
+        'profile': profile,
+        'craftsman_info': craftsman_info,
+        'craftsman_status': craftsman_status,
     })

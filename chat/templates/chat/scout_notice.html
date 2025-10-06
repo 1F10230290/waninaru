@@ -1,0 +1,20 @@
+{% if received_scouts %}
+    {% for scout in received_scouts %}
+        {% if not scout.accepted %}
+            <p>
+                <a href="{% url 'user_profile' scout.craftsman.id %}">
+                    {{ scout.craftsman.profile.name }}
+                </a>
+                からスカウト: {{ scout.message }}
+                <form method="post" action="{% url 'accept_scout' scout.id %}">
+                    {% csrf_token %}
+                    <button type="submit">承諾してチャット開始</button>
+                </form>
+            </p>
+        {% endif %}
+    {% endfor %}
+{% else %}
+    <p>現在通知はありません。</p>
+{% endif %}
+
+<a href="javascript:history.back()">戻る</a>
