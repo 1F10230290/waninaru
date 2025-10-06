@@ -30,11 +30,19 @@ def generate(request):
     if request.method == 'POST':
         data = json.loads(request.body)
         item = data.get('item', '工芸品')
-        prompt = f"""
-        あなたは伝統工芸の専門家です。
-        {item} のデザインを描くときに気を付けるべきことを、
-        初心者にも分かりやすく1行で説明してください。
-        """
+        mode = data.get('mode', 'notice')
+        message = data.get('message', '')
+
+        if mode=="notice":  
+            prompt = f"あなたは伝統工芸の専門家です。{item} のデザインを描くときに気を付けるべきことを、初心者にも分かりやすく1行で説明してください。"
+        elif mode=="how_to_draw":
+            prompt = f"あなたは伝統工芸の専門家です。{item} を描くときの具体的な描き方やコツを、少し経験がある人向けにアドバイスしてください。"
+        elif mode=="freeinput":
+            prompt = f"ユーザーからの質問: {message}\nこれに専門家として答えてください。"
+        else:
+            prompt = f"{item} に関する説明をしてください。"
+
+
         #ここでAIに送っている
         response = client.chat.completions.create(
             model="gpt-3.5-turbo",
