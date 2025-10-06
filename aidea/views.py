@@ -21,7 +21,8 @@ def index(request):
 
 #デザインページ用のビュー
 def design(request):
-    return render(request, 'aidea/design.html')  # デザイン対話ページ
+    item_name = request.GET.get('item','')
+    return render(request, 'aidea/design.html', {'item_name':item_name})  # デザイン対話ページ
 
 #AI生成用のビュー
 #CSRFトークンチェックを無効にして、フロントからPOSTを送れるようにする
@@ -29,25 +30,14 @@ def design(request):
 def generate(request):
     if request.method == 'POST':
         data = json.loads(request.body)
-        item = data.get('item', '工芸品')
-        mode = data.get('mode', 'notice')
-        message = data.get('message', '')
-
-        if mode=="notice":  
-            prompt = f"あなたは伝統工芸の専門家です。{item} のデザインを描くときに気を付けるべきことを、初心者にも分かりやすく1行で説明してください。"
-        elif mode=="how_to_draw":
-            prompt = f"あなたは伝統工芸の専門家です。{item} を描くときの具体的な描き方やコツを、少し経験がある人向けにアドバイスしてください。"
-        elif mode=="freeinput":
-            prompt = f"ユーザーからの質問: {message}\nこれに専門家として答えてください。"
-        else:
-            prompt = f"{item} に関する説明をしてください。"
-
+        messages = data.get('messages', [])
 
         #ここでAIに送っている
         response = client.chat.completions.create(
             model="gpt-3.5-turbo",
-            messages=[{"role": "user", "content": prompt}]
+            messages=messages
         )
+        
         #フロントJSにデータを返す
         return JsonResponse({"text": response.choices[0].message.content})
     return JsonResponse({"error": "POSTのみ対応"}, status=400)

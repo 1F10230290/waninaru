@@ -6,14 +6,20 @@
     <meta charset="UTF-8">
     <title>工芸品デザイン</title>
     <script src="{% static 'aidea/design.js' %}" defer></script>
+    <link rel="stylesheet" href="{% static 'aidea/design.css' %}">
 </head>
 <body>
     <h1>工芸品デザイン</h1>
-    <button id="generate-btn">注意点を生成</button>
+    <h2>注意点</h2>
     
-    <button id="howto-btn">描き方を聞く</button>
+    <!--推奨質問のボタン-->
+    <button class="suggest-btn" data-question="{{ item_name }}の描き方のコツを教えて下さい">描き方のコツを聞く</button>
     
-    <input type="text"  id="free-input" placeholder="自由に質問を書いてください">
+    <!--チャット欄-->
+    <div id="chat-box"></div>
+
+    <!--自由入力-->
+    <input type="text"  id="free-input" placeholder="メッセージを入力">
     <button id="free-btn">送信</button>
 
     <div id="result"></div>
