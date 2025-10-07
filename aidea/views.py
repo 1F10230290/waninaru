@@ -5,15 +5,25 @@ import os
 from openai import OpenAI
 from dotenv import load_dotenv
 import json
+import requests
+import base64
+from django.conf import settings
+from PIL import Image
+import io
 
 load_dotenv()  # .envからAPIキーを読み込む
 
 #OpenAIクライアントを作成
 #iniadのOpenAIサーバーに接続する設定
-client = OpenAI(
+chat_client = OpenAI(
     api_key=os.environ.get("OPENAI_API_KEY"),
     base_url="https://api.openai.iniad.org/api/v1"
 )
+
+official_openai_client = OpenAI(
+    api_key=os.environ.get("OPENAI_API_KEY_Teacher")
+)
+
 
 #トップページ用のビュー
 def index(request):
@@ -60,7 +70,7 @@ def generate(request):
         messages_with_system_prompt = [system_prompt] + messages
 
         #ここでAIに送っている
-        response = client.chat.completions.create(
+        response = chat_client.chat.completions.create(
             model="gpt-3.5-turbo",
             messages=messages_with_system_prompt,
             max_tokens=500
@@ -69,3 +79,72 @@ def generate(request):
         #フロントJSにデータを返す
         return JsonResponse({"text": response.choices[0].message.content})
     return JsonResponse({"error": "POSTのみ対応"}, status=400)
+
+# aidea/views.py
+
+# ... (既存のimportやクライアント定義、他のビューはそのまま) ...
+
+
+# ▼▼▼ 新しいフィードバック用のビューを追加 ▼▼▼
+@csrf_exempt
+def get_feedback(request):
+    if request.method == 'POST':
+        design_image = request.FILES.get('design_image')
+        if not design_image:
+            return JsonResponse({"error": "画像ファイルがありません。"}, status=400)
+        
+        # URLから工芸品名を取得
+        # 'item' は design ビューに渡されるクエリパラメータ。
+        # 実際にはJSから送るのが確実ですが、ここではセッションやリファラから取得する簡易的な例を示します。
+        item_name = request.POST.get('item_name', '日本の伝統工芸品')
+
+        try:
+            # 画像をbase64形式のテキストにエンコード
+            base64_image = base64.b64encode(design_image.read()).decode('utf-8')
+
+            # GPT-4Vに送るための、フィードバックに特化したプロンプト
+            feedback_prompt = f"""
+            あなたは、日本の伝統工芸品の魅力を若いクリエイターに伝える、親切なAIデザインパートナーです。
+            添付された画像は、「{item_name}」のデザイン案です。
+            このデザインについて、以下の構成で具体的なフィードバックをMarkdown形式で返してください。
+
+            ### 1. 素晴らしい点
+            まず、このデザインの最も優れている点、魅力的な点を褒めてください。クリエイターの意欲を高めることが重要です。
+
+            ### 2. さらに良くするための提案
+            次に、このデザインを製品化する上での**技術的な実現可能性**を厳しく評価してください。特に、**複雑な凹凸表現、細かい線、色のグラデーション**などが、この「{item_name}」の製法で本当に実現可能か、あなたの専門知識を基に入念にチェックしてください。
+            - **もし課題がある場合**: 「【製造上の課題】」という見出しで、実現が難しい部分とその技術的な理由を明確に指摘し、デザインの意図を尊重した代替案を提案してください。
+            - **もし課題がない場合**: 「【技術的な懸念なし】」という見出しで、「このデザインは{item_name}の特性をよく理解しており、技術的な問題点はありません」と述べ、その上でデザインをさらに引き立てるためのプロ向けの豆知識を共有してください。
+            
+            ### 3. 総評
+            最後に、全体をポジティブにまとめる一言をお願いします。
+            """
+
+            # GPT-4 (gpt-4-turbo) APIを呼び出す
+            vision_response = official_openai_client.chat.completions.create(
+                model="gpt-4-turbo",
+                messages=[
+                    {
+                        "role": "user",
+                        "content": [
+                            {"type": "text", "text": feedback_prompt},
+                            {
+                                "type": "image_url",
+                                "image_url": {
+                                    "url": f"data:image/png;base64,{base64_image}"
+                                }
+                            }
+                        ]
+                    }
+                ],
+                max_tokens=800
+            )
+
+            feedback_text = vision_response.choices[0].message.content
+            return JsonResponse({"feedback": feedback_text})
+
+        except Exception as e:
+            print(f"画像フィードバック処理エラー: {e}")
+            return JsonResponse({"error": f"AIとの通信中にエラーが発生しました: {e}"}, status=500)
+
+    return JsonResponse({"error": "POSTリクエストのみ対応"}, status=400)

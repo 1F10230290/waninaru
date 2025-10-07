@@ -3,6 +3,7 @@
     overflow-y: auto;
     border: 1px solid #ccc;
     padding: 10px;
+    background-color: #f1f1f1;
 }
 .user-message {
     text-align: right;
@@ -20,4 +21,16 @@
 }
 .suggest-btn {
     margin: 5px;
+}
+
+#free-input {
+    margin-top: 10px;
+    padding: 5px;
+    width: 100%;
+    /* paddingやborderが原因ではみ出さないようにするためのおまじない */
+    box-sizing: border-box; 
+}
+
+body{
+    background-color: #ccc;
 }
