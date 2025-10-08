@@ -1,0 +1,36 @@
+#chat-box {
+    height: 300px;
+    overflow-y: auto;
+    border: 1px solid #ccc;
+    padding: 10px;
+    background-color: #f1f1f1;
+}
+.user-message {
+    text-align: right;
+    background: #d1e7ff;
+    margin: 5px;
+    padding: 8px;
+    border-radius: 10px;
+}
+.assistant-message {
+    text-align: left;
+    background: #f1f1f1;
+    margin: 5px;
+    padding: 8px;
+    border-radius: 10px;
+}
+.suggest-btn {
+    margin: 5px;
+}
+
+#free-input {
+    margin-top: 10px;
+    padding: 5px;
+    width: 100%;
+    /* paddingやborderが原因ではみ出さないようにするためのおまじない */
+    box-sizing: border-box; 
+}
+
+body{
+    background-color: #ccc;
+}

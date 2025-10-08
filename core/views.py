@@ -1,5 +1,8 @@
 from django.shortcuts import render
+import openai
+import os
 
+openai.api_key=os.getenv("OPENAI_API_KEY")
 # Create your views here.
 
 #トップページのビュー関数

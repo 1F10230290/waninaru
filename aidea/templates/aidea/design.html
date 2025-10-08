@@ -1,0 +1,43 @@
+{% load static %} 
+{% csrf_token %}
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>工芸品デザイン</title>
+    <script src="{% static 'aidea/design.js' %}" defer></script>
+    <link rel="stylesheet" href="{% static 'aidea/design.css' %}">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+<body>
+    <h1>工芸品デザイン</h1>
+    <h2>注意点</h2>
+    
+    <!--推奨質問のボタン-->
+    <button class="suggest-btn" data-command="drawing_tips" data-item-name="{{ item_name }}">描き方のコツを聞く</button>
+    
+    <!--チャット欄-->
+    <div id="chat-box"></div>
+
+    <!--自由入力-->
+    <input type="text"  id="free-input" placeholder="メッセージを入力">
+    <button id="free-btn">送信</button>
+
+    <div id="result"></div>
+
+    <hr>
+    <h2>デザインのフィードバック</h2>
+    <p>描いたデザインのイラストをアップロードして、AIからフィードバックをもらいましょう。</p>
+    <input type="file" id="feedback-image-upload" accept="image/*">
+    <button id="get-feedback-btn">フィードバックをもらう</button>
+    
+    <div id="feedback-loading" style="display: none; margin-top: 10px;">
+        <p>🎨 AIがあなたのデザインを分析しています...</p>
+    </div>
+    <div id="feedback-result" style="margin-top: 10px; border: 1px solid #eee; padding: 10px; border-radius: 5px; background: #f9f9f9;">
+        </div>
+
+    <hr>
+    <h2>デザインの投稿</h2>
+</body>
+</html>
