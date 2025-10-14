@@ -4,7 +4,6 @@ __pycache__/
 db.sqlite3
 *.pyc
 venv/lib/
-*.pyc
 
 #環境変数(aws用)
 .env

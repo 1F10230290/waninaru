@@ -49,15 +49,6 @@
             {% endfor %}
         </p>
 
-        <!-- 役職 -->
-        <p>
-            {{ form.role.label_tag }}<br>
-            {{ form.role }}<br>
-            {% for error in form.role.errors %}
-                <span style="color:red">{{ error }}</span><br>
-            {% endfor %}
-        </p>
-
         <button type="submit">登録する</button>
     </form>
 
