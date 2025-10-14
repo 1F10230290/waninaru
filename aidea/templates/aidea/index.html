@@ -1,13 +1,21 @@
+{% load static %} 
+
 <!DOCTYPE html>
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
     <title>工芸品選択</title>
+    <script src="{% static 'aidea/design.js' %}" defer></script>
+    <link rel="stylesheet" href="{% static 'aidea/design.css' %}">
 </head>
 <body>
     <h1>工芸品を選んでください</h1>
+    <img src = "{% static 'aidea/img/hellokitty.png' %}" alt="仮画像">
+    <hr>
     <!--JavaScriptでページ遷移させる。選んだ工芸品の名前をURLパラメータとして渡す-->
-    <button onclick="location.href='/aidea/design/?item=輪島塗'">輪島塗</button>
-    <button onclick="location.href='/aidea/design/?item=九谷焼'">九谷焼</button>
+    <button onclick="location.href='/aidea/design/?item=輪島塗のお椀'">輪島塗のお椀</button>
+    <button onclick="location.href='/aidea/design/?item=会津塗のお椀'">会津塗のお椀</button>
+    <button onclick="location.href='/aidea/design/?item=輪島塗のお皿'">有田焼のお皿</button>
+    <button onclick="location.href='/aidea/design/?item=九谷焼のお皿'">九谷焼のお皿</button>
 </body>
 </html>
