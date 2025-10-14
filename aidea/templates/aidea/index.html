@@ -11,11 +11,13 @@
 <body>
     <h1>工芸品を選んでください</h1>
     <img src = "{% static 'aidea/images/hellokitty.png' %}" alt="仮画像">
+    <h2>輪島塗について</h2>
+    <p>輪島塗の説明</p>
     <hr>
     <!--JavaScriptでページ遷移させる。選んだ工芸品の名前をURLパラメータとして渡す-->
     <button onclick="location.href='/aidea/design/?item=輪島塗のお椀'">輪島塗のお椀</button>
     <button onclick="location.href='/aidea/design/?item=会津塗のお椀'">会津塗のお椀</button>
-    <button onclick="location.href='/aidea/design/?item=輪島塗のお皿'">有田焼のお皿</button>
+    <button onclick="location.href='/aidea/design/?item=有田焼のお皿'">有田焼のお皿</button>
     <button onclick="location.href='/aidea/design/?item=九谷焼のお皿'">九谷焼のお皿</button>
 </body>
 </html>
