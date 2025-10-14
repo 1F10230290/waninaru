@@ -4,15 +4,28 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <title>工芸品デザイン</title>
+    <title>デザイン</title>
     <script src="{% static 'aidea/design.js' %}" defer></script>
     <link rel="stylesheet" href="{% static 'aidea/design.css' %}">
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 </head>
 <body>
-    <h1>工芸品デザイン</h1>
-    <h2>注意点</h2>
+    <h1>{{item_name}}のデザインを作る</h1>
+    <hr>
+    <h2>デフォルトデザインのダウンロード</h2>
+    <p>デザイン用の{{item_name}}の下絵をダウンロードできます。</p>
+
+    <a href="{% static 'aidea/images/owan_base.png' %}" download="owan_base.png">
+        <button>ダウンロード</button>
+    </a>
+
     
+    <h2>注意点</h2>
+    <ul>
+        <li>細い線よりも太く大胆な模様にすると、塗りの厚みに負けずきれいに仕上がります。</li>
+        <li>彫り模様は平らな側面に入れると美しく映えます。曲面や縁は避けましょう。</li>
+        <li>熱や木の動きで塗りが割れやすいので、縁や底を避けて中央部分にデザインするのがおすすめです。</li>
+    </ul>
     <!--推奨質問のボタン-->
     <button class="suggest-btn" data-command="drawing_tips" data-item-name="{{ item_name }}">描き方のコツを聞く</button>
     

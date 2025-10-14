@@ -48,9 +48,10 @@ async function sendMessage(userInput, rawPrompt = null) {
     renderChat();
 
     // AIに送るための会話履歴を一時的に作成
-    let messagesForApi = [...messages];
-    // 最後のメッセージを、AIに送る用のプロンプトで上書き
-    messagesForApi[messagesForApi.length - 1].content = promptToSend;
+    let messagesForApi = [
+        ...messages.slice(0,-1),
+        {role: "user", content: promptToSend}
+    ];
 
     try {
         const response = await fetch("/aidea/generate/", {
@@ -105,10 +106,11 @@ document.addEventListener("DOMContentLoaded", () => {
                 // AIに送る詳細なプロンプト
                 finalPrompt = `# 指示
                 私はアマチュアクリエイターです。「${itemName}」の表面に描くためのデザイン案を、立体的なイラストとして描きたいです。
-                その描き方の手順を、プロのデザイナーが初心者に教えるように、専門用語を使わずにステップバイステップ形式でアドバイスしてください。
+                既に、${itemName}を模った枠線は用意してあり、塗り絵の状態です。
+                プロのデザイナーが初心者に教えるように、専門用語を使わずにステップバイステップ形式でアドバイスしてください。
                 
                 # 守ってほしい手順
-                - **ステップ1**では、まず「${itemName}」そのものの形を立体図として描く方法を説明してください。例えば、お椀ならその丸みや高台の描き方、お皿ならその深さや縁の表現方法などです。
+                - **ステップ1**では、まず
                 - その後、構図の取り方や、曲面に模様をうまく乗せるコツなどを重点的に教えてください。また、${itemName}で可能な表現についても教えて下さい。
                 - あなたが持つべき役割や制約条件は、システムプロンプトの指示に厳密に従ってください。
                 `;
