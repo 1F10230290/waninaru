@@ -16,15 +16,19 @@
     <p>デザイン用の{{item_name}}の下絵をダウンロードできます。</p>
 
     <a href="{% static 'aidea/images/owan_base.png' %}" download="owan_base.png">
-        <button>ダウンロード</button>
+        <button>お椀のベース画像をダウンロード</button>
+    </a>
+
+        <a href="{% static 'aidea/images/osara_base.png' %}" download="osara_base.png">
+        <button>お皿のベース画像をダウンロード</button>
     </a>
 
     
     <h2>注意点</h2>
     <ul>
-        <li>細い線よりも太く大胆な模様にすると、塗りの厚みに負けずきれいに仕上がります。</li>
-        <li>彫り模様は平らな側面に入れると美しく映えます。曲面や縁は避けましょう。</li>
-        <li>熱や木の動きで塗りが割れやすいので、縁や底を避けて中央部分にデザインするのがおすすめです。</li>
+        {% for tip in tips %}
+            <li>{{tip}}</li>
+        {% endfor%}
     </ul>
     <!--推奨質問のボタン-->
     <button class="suggest-btn" data-command="famous_design" data-item-name="{{ item_name }}">代表的な模様やモチーフは？</button>
