@@ -53,6 +53,8 @@ async function sendMessage(userInput, rawPrompt = null) {
         {role: "user", content: promptToSend}
     ];
 
+    const itemName = document.querySelector(".suggest-btn").dataset.itemName || "日本の伝統工芸品";
+
     try {
         const response = await fetch("/aidea/generate/", {
             method: "POST",
@@ -60,7 +62,9 @@ async function sendMessage(userInput, rawPrompt = null) {
                 "Content-Type": "application/json",
                 "X-CSRFToken": getCookie("csrftoken"),
             },
-            body: JSON.stringify({ messages: messagesForApi }), // AI用の会話履歴を送信
+            body: JSON.stringify({
+                 messages: messagesForApi , // AI用の会話履歴を送信
+                item_name: itemName}),
         });
 
         if (!response.ok) throw new Error("サーバーエラー: " + response.status);
@@ -100,35 +104,62 @@ document.addEventListener("DOMContentLoaded", () => {
             const command = btn.dataset.command;
             const itemName = btn.dataset.itemName;
             
+            const buttonText = btn.textContent;
             let finalPrompt = "";
 
-            if (command === "drawing_tips") {
-                // AIに送る詳細なプロンプト
+            if (command === "famous_design") {
+                //「代表的な模様やモチーフは？」
+                finalPrompt = `
+                「${itemName}」のデザインのヒントとして、伝統的に使われる代表的な「模様」や「モチーフ」（例：植物、動物、幾何学模様など）を3〜5個教えてください。
+                それぞれのモチーフについて、
+                - デザインの意味（例：縁起が良い、など）
+                - デザインに取り入れる際の簡単なヒントを簡潔に説明してください。
+                - あなたが持つべき役割や制約条件は、システムプロンプトの指示に厳密に従ってください。
+                `;
+            } 
+            
+            else if (command === "easy_design") {
+                //「初心者向けの簡単なデザイン案は？」
+                finalPrompt = `
+                私はデザイン初心者です。「${itemName}」の特性を活かしつつ、初心者でも描きやすい「シンプルなデザイン案」を2つ提案してください。
+                - なぜそれが描きやすいのか（例：複雑な曲線が少ない、使う色が少ない）
+                - 簡単なデザインの構成を教えてください。
+                - あなたが持つべき役割や制約条件は、システムプロンプトの指示に厳密に従ってください。
+                `;
+            } 
+
+            else if (command === "drawing_tips") {
+                //「描き方のコツは？」 (既存のプロンプト)
                 finalPrompt = `# 指示
                 私はアマチュアクリエイターです。「${itemName}」の表面に描くためのデザイン案を、立体的なイラストとして描きたいです。
                 既に、${itemName}を模った枠線は用意してあり、塗り絵の状態です。
                 プロのデザイナーが初心者に教えるように、専門用語を使わずにステップバイステップ形式でアドバイスしてください。
-                
+
                 # 守ってほしい手順
                 - **ステップ1**では、まず
                 - その後、構図の取り方や、曲面に模様をうまく乗せるコツなどを重点的に教えてください。また、${itemName}で可能な表現についても教えて下さい。
                 - あなたが持つべき役割や制約条件は、システムプロンプトの指示に厳密に従ってください。
                 `;
+            } 
+            
+            else if (command === "avoid_design") {
+                //「デザインで避けるべきことは？」
+                finalPrompt = `
+                私は「${itemName}」の製造方法を知りません。
+                初心者がやりがちだけど、実際の製造（${itemName}）を考えると「技術的に難しい」または「避けるべき」デザインのNG例を教えてください。
+                - （例：細すぎる線、特定の部分への彫刻、色の多用など）
+                理由とセットで、リスト形式で簡潔に教えてください。
+                - あなたが持つべき役割や制約条件は、システムプロンプトの指示に厳密に従ってください。
+                `;
             }
 
             if (finalPrompt) {
-                // ▼▼▼ この呼び出し方を変更 ▼▼▼
-                // 修正前: sendMessage(finalPrompt);
-                
-                // 修正後:
-                // 第1引数に「画面に表示するテキスト」、第2引数に「AIに送るプロンプト」を渡す
-                const buttonText = "描き方のコツを教えて"; // "描き方のコツを聞く"
                 sendMessage(buttonText, finalPrompt);
             }
         });
     });
 
-const feedbackImageUpload = document.getElementById("feedback-image-upload");
+    const feedbackImageUpload = document.getElementById("feedback-image-upload");
     const getFeedbackBtn = document.getElementById("get-feedback-btn");
     const feedbackResult = document.getElementById("feedback-result");
     const feedbackLoading = document.getElementById("feedback-loading");
