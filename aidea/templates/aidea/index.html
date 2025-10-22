@@ -13,15 +13,58 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
 </head>
 <body>
-    <h1>工芸品を選んでください</h1>
-    <img src = "{% static 'aidea/images/hellokitty.png' %}" alt="仮画像">
-    <h2>輪島塗について</h2>
-    <p>輪島塗の説明</p>
+    <div class="container-fluid">
+    <div class="row">
+        <button>
+            <div class="area">
+                <img src="{% static 'aidea/images/hellokitty.png' %}" alt="仮画像" class="img-fluid w-50 h-50">
+            </div>
+        </button>
+        <p class="col-3 py-3">アイデア作成</p>
+    </div>
+    <h1 class="row justify-content-center my-5">工芸品を選んでください</h1>
+    <!-- <img src = "{% static 'aidea/images/hellokitty.png' %}" alt="仮画像"  class="offset-4 col-4">
+    <h2 class="row justify-content-center">輪島塗について</h2>
+    <p class="row justify-content-center">輪島塗の説明</p> -->
     <hr>
     <!--JavaScriptでページ遷移させる。選んだ工芸品の名前をURLパラメータとして渡す-->
-    <button onclick="location.href='/aidea/design/?item=輪島塗のお椀'">輪島塗のお椀</button>
-    <button onclick="location.href='/aidea/design/?item=会津塗のお椀'">会津塗のお椀</button>
-    <button onclick="location.href='/aidea/design/?item=有田焼のお皿'">有田焼のお皿</button>
-    <button onclick="location.href='/aidea/design/?item=九谷焼のお皿'">九谷焼のお皿</button>
+    <div class = "row">
+        <div class="offset-2 col-3">     
+            <button onclick="location.href='/aidea/design/?item=輪島塗のお椀'" class="my-3">
+                <div class="area pt-3 pb-3">
+                    <img src="{% static 'aidea/images/hellokitty.png' %}" alt="仮画像" class="img-fluid w-50 h-50 pb-3" ></br>
+                    輪島塗のお椀
+                </div>
+            </button>
+        </div>
+        <div class="offset-2 col-3 area">
+            <button onclick="location.href='/aidea/design/?item=会津塗のお椀'" class="my-3">
+                <div class="area pt-3 pb-3">
+                    <img src="{% static 'aidea/images/hellokitty.png' %}" alt="仮画像" class="w-50 h-50 pb-3"></br>
+                    会津塗のお椀
+                </div>
+            </button>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="offset-2 col-3">
+            <button onclick="location.href='/aidea/design/?item=有田焼のお皿'" class="my-3">
+                <div class="area pt-3 pb-3">
+                    <img src="{% static 'aidea/images/hellokitty.png' %}" alt="仮画像" class="w-50 h-50 pb-3"></br>
+                    有田焼のお皿
+                </div>
+            </button>
+        </div>
+        <div class="offset-2 col-3">
+            <button onclick="location.href='/aidea/design/?item=九谷焼のお皿'" class="my-3">
+                <div class="area pt-3 pb-3">
+                    <img src="{% static 'aidea/images/hellokitty.png' %}" alt="仮画像" class="w-50 h-50 pb-3"></br>
+                    九谷焼のお皿
+                </div>
+            </button>
+        </div>
+    </div>
+    </div>
 </body>
 </html>
