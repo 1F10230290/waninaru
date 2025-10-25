@@ -211,3 +211,23 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 });
+
+
+let sidebar_toggler = document.querySelector('.sidebar-toggler');
+let sidebar = document.querySelector('.sidebar');
+let sidebar_status=false;
+
+const sidebarToggler = () =>{
+    if(!sidebar_status){
+        sidebar.style.left = '0%';
+        sidebar_status = true;
+        return;
+    }
+
+    sidebar.style.left = '-100%';
+    sidebar_status = false;
+
+
+}
+
+sidebar_toggler.addEventListener('click',sidebarToggler)
