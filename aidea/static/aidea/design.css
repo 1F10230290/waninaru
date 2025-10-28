@@ -57,3 +57,10 @@ html, body{
     cursor: pointer;
 }
 
+#idea_upload_txt {
+    height: 300px;
+    width: 500px;
+    border: 1px solid #ccc;
+    padding: 10px;
+    background-color: #f1f1f1;
+}
