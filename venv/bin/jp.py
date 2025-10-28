@@ -1,4 +1,4 @@
-#!/home/iniad/Irokumo/venv/bin/python3
+#!/home/iniad/Irokumo/venv/bin/python
 
 import sys
 import json

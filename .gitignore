@@ -1,9 +1,22 @@
 # Pythonキャッシュ
 __pycache__/
 */__pycache__/
-db.sqlite3
 *.pyc
-venv/lib/
+*.pyo
+*.pyd
+*.py[cod]
+*$py.class
 
-#環境変数(aws用)
+# Django / SQLite
+db.sqlite3
+*.sqlite3
+*.log
+
+# 環境変数
 .env
+
+# 仮想環境
+venv/
+ENV/
+env/
+.venv/
