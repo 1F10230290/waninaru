@@ -64,3 +64,7 @@ html, body{
     padding: 10px;
     background-color: #f1f1f1;
 }
+
+#modalFeaturetext{
+    font-size: 30px;
+}

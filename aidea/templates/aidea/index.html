@@ -62,9 +62,15 @@
     <h1 class="row justify-content-center my-5"></h1>
     <hr>
     <!--JavaScriptでページ遷移させる。選んだ工芸品の名前をURLパラメータとして渡す-->
+    <!--以下、赤くなっているところがありますが、VSCodeがDjangoの構文をJavaScriptだと思って解析しているためです。エラーではありません。-->
     <div class = "row">
         <div class="offset-1 col-4 offset-md-2 col-md-3">
-          <button class="my-3" onclick="showModal('輪島塗のお椀', '{% static "aidea/images/wazima5.jpg" %}', '下地に「地の粉（珪藻土）」を用いるため、やや厚みと重みがあり、立体的な彫りや沈金（金粉彫刻）を活かすデザインが映える。多層塗りによる深い艶が特徴なので、色数を抑えて漆の光沢や質感を主役にするデザインが◎。表面が硬く丈夫な反面、細かい模様を掘り込みすぎると割れやすいので、過度な細密彫刻は避ける。')">
+          <button class="my-3" onclick="showModal(
+            '輪島塗について', 
+            '{% static "aidea/images/wazima5.jpg" %}', 
+            '吾輩は猫である。名前はまだ無い。どこで生れたかとんと見当がつかぬ。何でも薄暗いじめじめした所でニャーニャー泣いていた事だけは記憶している。吾輩はここで始めて人間というものを見た。しかもあとで聞くとそれは書生という人間中で一番獰悪な種族であったそうだ。この書生というのは時々我々を捕えて煮て食うという話である。しかしその当時は何という考もなかったから別段恐しいとも思わなかった。',
+            ['特徴１', '特徴２', '特徴３']
+            )">
             <div class="area pt-3 pb-3">
               <img src="{% static 'aidea/images/wazima5.jpg' %}" alt="仮画像" class="img-fluid w-50 h-50 pb-3 img" ></br>
               輪島塗のお椀
@@ -72,8 +78,13 @@
           </button>
         </div>
 
-        <div class="offset-2 col-4 offset-md-2 col-md-3">
-          <button class="my-3" onclick="showModal('会津塗のお椀', '{% static "aidea/images/aidu3.jpg" %}', '下地に「地の粉（珪藻土）」を用いるため、やや厚みと重みがあり、立体的な彫りや沈金（金粉彫刻）を活かすデザインが映える。多層塗りによる深い艶が特徴なので、色数を抑えて漆の光沢や質感を主役にするデザインが◎。表面が硬く丈夫な反面、細かい模様を掘り込みすぎると割れやすいので、過度な細密彫刻は避ける。')">
+        <div class="offset-1 col-4 offset-md-2 col-md-3">
+          <button class="my-3" onclick="showModal(
+            '会津塗のお椀について', 
+            '{% static "aidea/images/aidu3.jpg" %}', 
+            '吾輩は猫である。名前はまだ無い。どこで生れたかとんと見当がつかぬ。何でも薄暗いじめじめした所でニャーニャー泣いていた事だけは記憶している。吾輩はここで始めて人間というものを見た。しかもあとで聞くとそれは書生という人間中で一番獰悪な種族であったそうだ。この書生というのは時々我々を捕えて煮て食うという話である。しかしその当時は何という考もなかったから別段恐しいとも思わなかった。',
+            ['特徴１', '特徴２', '特徴３']
+            )">
                 <div class="area pt-3 pb-3">
                     <img src="{% static 'aidea/images/aidu3.jpg' %}" alt="仮画像" class="img-fluid w-50 h-50 pb-3 img"></br>
                     会津塗のお椀
@@ -84,7 +95,12 @@
 
     <div class="row">
         <div class="offset-1 col-4 offset-md-2 col-md-3">
-          <button class="my-3" onclick="showModal('有田焼のお皿', '{% static "aidea/images/arita.webp" %}', '下地に「地の粉（珪藻土）」を用いるため、やや厚みと重みがあり、立体的な彫りや沈金（金粉彫刻）を活かすデザインが映える。多層塗りによる深い艶が特徴なので、色数を抑えて漆の光沢や質感を主役にするデザインが◎。表面が硬く丈夫な反面、細かい模様を掘り込みすぎると割れやすいので、過度な細密彫刻は避ける。')">
+          <button class="my-3" onclick="showModal(
+            '有田焼のお皿について', 
+            '{% static "aidea/images/arita.webp" %}', 
+            '吾輩は猫である。名前はまだ無い。どこで生れたかとんと見当がつかぬ。何でも薄暗いじめじめした所でニャーニャー泣いていた事だけは記憶している。吾輩はここで始めて人間というものを見た。しかもあとで聞くとそれは書生という人間中で一番獰悪な種族であったそうだ。この書生というのは時々我々を捕えて煮て食うという話である。しかしその当時は何という考もなかったから別段恐しいとも思わなかった。',
+            ['特徴１', '特徴２', '特徴３']
+            )">
                 <div class="area pt-3 pb-3">
                     <img src="{% static 'aidea/images/arita.webp' %}" alt="仮画像" class="w-50 h-50 pb-3 img"></br>
                     有田焼のお皿
@@ -92,7 +108,12 @@
             </button>
         </div>
         <div class="offset-2 col-4 offset-md-2 col-md-3">
-          <button class="my-3" onclick="showModal('九谷焼のお皿', '{% static "aidea/images/kutani2.webp" %}', '下地に「地の粉（珪藻土）」を用いるため、やや厚みと重みがあり、立体的な彫りや沈金（金粉彫刻）を活かすデザインが映える。多層塗りによる深い艶が特徴なので、色数を抑えて漆の光沢や質感を主役にするデザインが◎。表面が硬く丈夫な反面、細かい模様を掘り込みすぎると割れやすいので、過度な細密彫刻は避ける。')">
+          <button class="my-3" onclick="showModal(
+            '九谷焼のお皿について', 
+            '{% static "aidea/images/kutani2.webp" %}', 
+            '吾輩は猫である。名前はまだ無い。どこで生れたかとんと見当がつかぬ。何でも薄暗いじめじめした所でニャーニャー泣いていた事だけは記憶している。吾輩はここで始めて人間というものを見た。しかもあとで聞くとそれは書生という人間中で一番獰悪な種族であったそうだ。この書生というのは時々我々を捕えて煮て食うという話である。しかしその当時は何という考もなかったから別段恐しいとも思わなかった。',
+            ['特徴１', '特徴２', '特徴３']
+            )">
                 <div class="area pt-3 pb-3">
                     <img src="{% static 'aidea/images/kutani2.webp' %}" alt="仮画像" class="w-50 h-50 pb-3 img"></br>
                     九谷焼のお皿
@@ -118,6 +139,10 @@
             <div class="col-md-7 text-start">
               <h4 id="modalTitle"></h4>
               <p id="modalDescription" class="fs-5"></p>
+              <ul id="modalFeatures" class="fs-6"></ul>
+
+              <h5 id="modalFeatureTitle">特徴</h5>
+              <ul id="modalFeaturetext" class="fs-5"></ul>
             </div>
           </div>
         </div>
@@ -132,17 +157,28 @@
 
     <!--boostrap CDN経由 .js-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
-      <script>
+    <script>
     const modal = new bootstrap.Modal(document.getElementById('craftModal'));
     let currentItem = "";
 
-    function showModal(name, imgPath, description) {
+    function showModal(name, imgPath, description, features=[]) {
       document.getElementById('modalTitle').textContent = name;
       document.getElementById('modalImage').src = imgPath;
       document.getElementById('modalDescription').textContent = description;
-      currentItem = name;
-      modal.show();
-    }
+      document.getElementById("modalFeatureTitle").textContent = "特徴";
+
+    // 特徴リストを更新
+    const featureList = document.getElementById('modalFeaturetext');
+    featureList.innerHTML = ""; // 一度クリア
+    features.forEach(f => {
+      const li = document.createElement('li');
+      li.textContent = f;
+      featureList.appendChild(li);
+    });
+
+    currentItem = name;
+    modal.show();
+  }
 
     document.getElementById('makeButton').addEventListener('click', () => {
       location.href = `/aidea/design/?item=${encodeURIComponent(currentItem)}`;
