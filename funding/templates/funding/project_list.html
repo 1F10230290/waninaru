@@ -1,0 +1,40 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>プロジェクト一覧</title>
+</head>
+<body>
+<h1>クラウドファンディング プロジェクト一覧</h1>
+
+<ul>
+    {% for project in projects %}
+        <li style="margin-bottom: 20px; border-bottom: 1px solid #ccc; padding-bottom: 10px;">
+            <a href="{% url 'project_detail' project.pk %}">
+                <h2>{{ project.title }}</h2>
+            </a>
+
+            {% if project.image %}
+                <img src="{{ project.image.url }}" alt="{{ project.title }}" width="200">
+            {% endif %}
+
+            <p>{{ project.description|truncatechars:100 }}</p>
+            <p>目標金額: ¥{{ project.goal_amount }}</p>
+            <p>現在の支援額: ¥{{ project.current_amount }}</p>
+            <p>支援者数: {{ project.supporter_count }}</p>
+            <p>いいね: ❤️ {{ project.like_count }}</p>
+            <p>残り日数: {{ project.days_left }}日</p>
+
+            <p>タグ:
+            {% for tag in project.tags.all %}
+                <span>{{ tag.name }}</span>
+            {% empty %}
+                <span>タグなし</span>
+            {% endfor %}
+            </p>
+        </li>
+    {% endfor %}
+</ul>
+</body>
+</html>

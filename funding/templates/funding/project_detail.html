@@ -1,0 +1,86 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>{{ project.title }}</title>
+</head>
+<body>
+<h1>{{ project.title }}</h1>
+
+{% if project.image %}
+    <img src="{{ project.image.url }}" alt="{{ project.title }}" width="400">
+{% endif %}
+
+<p>{{ project.description }}</p>
+<p>目標金額: ¥{{ project.goal_amount }}</p>
+<p>現在の支援額: ¥{{ project.current_amount }}</p>
+<p>支援者数: {{ project.supporter_count }}</p>
+<p>いいね数: <span id="like-count">{{ project.like_count }}</span></p>
+<p>残り日数: {{ project.days_left }}日</p>
+<p>作成者: {{ project.created_by.username }}</p>
+
+<p>タグ:
+{% for tag in project.tags.all %}
+    <span>{{ tag.name }}</span>
+{% empty %}
+    <span>タグなし</span>
+{% endfor %}
+</p>
+
+<!-- いいねボタン -->
+{% if user.is_authenticated %}
+<button id="like-btn" data-liked="{{ user_liked|yesno:'true,false' }}">
+    {% if user_liked %}💔 いいね解除{% else %}❤️ いいね{% endif %}
+</button>
+{% else %}
+<p><a href="/accounts/login/">ログインしていいね</a></p>
+{% endif %}
+
+<!-- リターン（支援）一覧 -->
+<h2>リターン</h2>
+<ul>
+{% for reward in project.rewards.all %}
+    <li>
+        <strong>{{ reward.title }}</strong> - ¥{{ reward.amount }}
+        {% if reward.limit %} (残り: {{ reward.limit }}個) {% endif %}
+        <form action="{% url 'checkout' project.pk %}" method="POST">
+            {% csrf_token %}
+            <input type="hidden" name="amount" value="{{ reward.amount }}">
+            <button type="submit">このリターンで支援する</button>
+        </form>
+    </li>
+{% empty %}
+    <li>まだリターンが設定されていません</li>
+{% endfor %}
+</ul>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const btn = document.getElementById("like-btn");
+  if (!btn) return;
+
+  btn.addEventListener("click", () => {
+    fetch(window.location.pathname + "like/", {
+      method: "POST",
+      headers: {
+        "X-CSRFToken": "{{ csrf_token }}",
+        "X-Requested-With": "XMLHttpRequest",
+      },
+    })
+    .then(res => res.json())
+    .then(data => {
+      const countElem = document.getElementById("like-count");
+      countElem.textContent = data.like_count;
+      if (data.status === "liked") {
+        btn.textContent = "💔 いいね解除";
+      } else {
+        btn.textContent = "❤️ いいね";
+      }
+    });
+  });
+});
+</script>
+
+</body>
+</html>

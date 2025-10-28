@@ -55,6 +55,7 @@ INSTALLED_APPS = [
     'storages',
     'chat',
     'channels',
+    'funding',
 ]
 
 MIDDLEWARE = [
@@ -163,3 +164,6 @@ CHANNEL_LAYERS = {
     },
 }
 STATIC_URL = '/static/'
+
+STRIPE_PUBLIC_KEY = config('STRIPE_PUBLIC_KEY', '')
+STRIPE_SECRET_KEY = config('STRIPE_SECRET_KEY', '')

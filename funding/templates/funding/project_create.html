@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>クラファン作成</title>
+</head>
+<body>
+<h1>クラウドファンディングプロジェクト作成</h1>
+
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <fieldset>
+        <legend>プロジェクト情報</legend>
+        {{ form.as_p }}
+    </fieldset>
+
+    <fieldset>
+        <legend>リターン設定</legend>
+        {{ formset.management_form }}
+        {% for form in formset %}
+            <div style="border:1px solid #ccc; margin-bottom:5px; padding:5px;">
+                {{ form.as_p }}
+            </div>
+        {% endfor %}
+        <button type="button" onclick="addForm()">リターン追加</button>
+    </fieldset>
+
+    <button type="submit">作成</button>
+</form>
+
+<script>
+function addForm() {
+    const formsetDiv = document.querySelector('form fieldset:last-of-type');
+    const totalForms = document.querySelector('#id_form-TOTAL_FORMS');
+    const currentFormCount = parseInt(totalForms.value);
+    const newFormHtml = formsetDiv.querySelector('div').outerHTML.replace(/form-0/g, `form-${currentFormCount}`);
+    formsetDiv.insertAdjacentHTML('beforeend', newFormHtml);
+    totalForms.value = currentFormCount + 1;
+}
+</script>
+
+</body>
+</html>

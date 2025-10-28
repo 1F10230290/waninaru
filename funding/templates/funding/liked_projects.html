@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>いいねしたプロジェクト一覧</title>
+    <style>
+        body { font-family: sans-serif; margin: 20px; }
+        h2 { color: #333; }
+        ul { list-style: none; padding: 0; }
+        li { padding: 10px; border-bottom: 1px solid #ccc; }
+        a { text-decoration: none; color: #007bff; }
+        a:hover { text-decoration: underline; }
+        .like-count { color: #555; font-size: 0.9em; }
+        .empty { color: #888; font-style: italic; }
+    </style>
+</head>
+<body>
+    <h2>いいねしたプロジェクト一覧</h2>
+
+    {% if projects %}
+    <ul>
+        {% for project in projects %}
+        <li>
+            <a href="{% url 'project_detail' project.pk %}">{{ project.title }}</a>
+            <span class="like-count">（いいね数：{{ project.like_count }}）</span>
+        </li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <p class="empty">まだいいねしたプロジェクトはありません。</p>
+    {% endif %}
+</body>
+</html>
