@@ -5,7 +5,6 @@
 <head>
     <meta charset="UTF-8">
     <title>工芸品選択</title>
-    <!-- <script src="{% static 'aidea/design.js' %}" defer></script> -->
     <!--boostrap CDN経由 .js-->
     <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script> -->
     <link rel="stylesheet" href="{% static 'aidea/design.css' %}">
@@ -68,6 +67,7 @@
 
 
     <div class="container-fluid">
+<<<<<<< HEAD
     <!-- <div class="row">
         <button>
             <div class="area">
@@ -80,9 +80,16 @@
     <!-- <img src = "{% static 'aidea/images/hellokitty.png' %}" alt="仮画像"  class="offset-4 col-4">
     <h2 class="row justify-content-center">輪島塗について</h2>
     <p class="row justify-content-center">輪島塗の説明</p> -->
+=======
+    <h1 class="row justify-content-center my-5">工芸品を選んでください</h1>
+
+    <h1 class="row justify-content-center my-5"></h1>
+>>>>>>> origin/yuta
     <hr>
     <!--JavaScriptでページ遷移させる。選んだ工芸品の名前をURLパラメータとして渡す-->
+    <!--以下、赤くなっているところがありますが、VSCodeがDjangoの構文をJavaScriptだと思って解析しているためです。エラーではありません。-->
     <div class = "row">
+<<<<<<< HEAD
         <div class="offset-1 col-4 offset-md-2 col-md-3">     
             <button onclick="location.href='/aidea/design/?item=輪島塗のお椀'" class="btn btn-outline-dark my-3">
                 <div class="area pt-3 pb-3">
@@ -95,6 +102,31 @@
             <button onclick="location.href='/aidea/design/?item=会津塗のお椀'" class="btn btn-outline-dark my-3">
                 <div class="area pt-3 pb-3">
                     <img src="{% static 'aidea/images/aidu_sq2.jpg' %}" alt="仮画像" class="w-50 h-50 pb-3 img"></br>
+=======
+        <div class="offset-1 col-4 offset-md-2 col-md-3">
+          <button class="my-3" onclick="showModal(
+            '輪島塗', 
+            '{% static "aidea/images/wazima5.jpg" %}', 
+            '輪島塗は石川県輪島市で作られる漆器です。特徴は「木地を素地とする」「布着せを施す」「輪島でしか採れない地の粉を下地に使う」ことです。良質な地の粉により強度が高まり、美しい仕上がりになります。彫りに金を入れたり、金粉・銀粉を使った蒔絵など華やかな装飾も魅力です。100を超える工程を経て作られるため丈夫で、修復して長く使うこともできます。',
+            ['金粉や銀粉を使用した蒔絵などの華やかな表現', '布着せしている', '輪島市でのみ採れる輪島地の粉が下地である']
+            )">
+            <div class="area pt-3 pb-3">
+              <img src="{% static 'aidea/images/wazima5.jpg' %}" alt="仮画像" class="img-fluid w-50 h-50 pb-3 img" ></br>
+              輪島塗のお椀
+            </div>
+          </button>
+        </div>
+
+        <div class="offset-1 col-4 offset-md-2 col-md-3">
+          <button class="my-3" onclick="showModal(
+            '会津塗', 
+            '{% static "aidea/images/aidu3.jpg" %}', 
+            '吾輩は猫である。名前はまだ無い。どこで生れたかとんと見当がつかぬ。何でも薄暗いじめじめした所でニャーニャー泣いていた事だけは記憶している。吾輩はここで始めて人間というものを見た。しかもあとで聞くとそれは書生という人間中で一番獰悪な種族であったそうだ。この書生というのは時々我々を捕えて煮て食うという話である。しかしその当時は何という考もなかったから別段恐しいとも思わなかった。',
+            ['特徴１', '特徴２', '特徴３']
+            )">
+                <div class="area pt-3 pb-3">
+                    <img src="{% static 'aidea/images/aidu3.jpg' %}" alt="仮画像" class="img-fluid w-50 h-50 pb-3 img"></br>
+>>>>>>> origin/yuta
                     会津塗のお椀
                 </div>
             </button>
@@ -103,7 +135,16 @@
 
     <div class="row">
         <div class="offset-1 col-4 offset-md-2 col-md-3">
+<<<<<<< HEAD
             <button onclick="location.href='/aidea/design/?item=有田焼のお皿'" class="btn btn-outline-dark my-3">
+=======
+          <button class="my-3" onclick="showModal(
+            '有田焼', 
+            '{% static "aidea/images/arita.webp" %}', 
+            '吾輩は猫である。名前はまだ無い。どこで生れたかとんと見当がつかぬ。何でも薄暗いじめじめした所でニャーニャー泣いていた事だけは記憶している。吾輩はここで始めて人間というものを見た。しかもあとで聞くとそれは書生という人間中で一番獰悪な種族であったそうだ。この書生というのは時々我々を捕えて煮て食うという話である。しかしその当時は何という考もなかったから別段恐しいとも思わなかった。',
+            ['特徴１', '特徴２', '特徴３']
+            )">
+>>>>>>> origin/yuta
                 <div class="area pt-3 pb-3">
                     <img src="{% static 'aidea/images/arita.webp' %}" alt="仮画像" class="w-50 h-50 pb-3 img"></br>
                     有田焼のお皿
@@ -111,7 +152,16 @@
             </button>
         </div>
         <div class="offset-2 col-4 offset-md-2 col-md-3">
+<<<<<<< HEAD
             <button onclick="location.href='/aidea/design/?item=九谷焼のお皿'" class="btn btn-outline-dark my-3">
+=======
+          <button class="my-3" onclick="showModal(
+            '九谷焼', 
+            '{% static "aidea/images/kutani2.webp" %}', 
+            '吾輩は猫である。名前はまだ無い。どこで生れたかとんと見当がつかぬ。何でも薄暗いじめじめした所でニャーニャー泣いていた事だけは記憶している。吾輩はここで始めて人間というものを見た。しかもあとで聞くとそれは書生という人間中で一番獰悪な種族であったそうだ。この書生というのは時々我々を捕えて煮て食うという話である。しかしその当時は何という考もなかったから別段恐しいとも思わなかった。',
+            ['特徴１', '特徴２', '特徴３']
+            )">
+>>>>>>> origin/yuta
                 <div class="area pt-3 pb-3">
                     <img src="{% static 'aidea/images/kutani_sq1.jpg' %}" alt="仮画像" class="w-50 h-50 pb-3 img"></br>
                     九谷焼のお皿
@@ -120,8 +170,67 @@
         </div>
     </div>
     </div>
-    <script src="{% static 'aidea/design.js' %}" defer></script>
+
+    <!--モーダル-->
+  <div class="modal fade" id="craftModal" tabindex="-1" aria-labelledby="craftModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="craftModalLabel">工芸品について</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="閉じる"></button>
+        </div>
+        <div class="modal-body">
+          <div class="row align-items-center">
+            <div class="col-md-5">
+                <img id="modalImage" src="" alt="工芸品画像" class="img-fluid h-100 w-100 rounded">
+            </div>
+            <div class="col-md-7 text-start">
+              <h4 id="modalTitle"></h4>
+              <p id="modalDescription" class="fs-5"></p>
+              <ul id="modalFeatures" class="fs-6"></ul>
+
+              <h5 id="modalFeatureTitle">特徴</h5>
+              <ul id="modalFeaturetext" class="fs-5"></ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">閉じる</button>
+          <button type="button" class="btn btn-primary" id="makeButton">この工芸品のデザイン作る</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
     <!--boostrap CDN経由 .js-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+    <script>
+    const modal = new bootstrap.Modal(document.getElementById('craftModal'));
+    let currentItem = "";
+
+    function showModal(name, imgPath, description, features=[]) {
+      document.getElementById('modalTitle').textContent = name;
+      document.getElementById('modalImage').src = imgPath;
+      document.getElementById('modalDescription').textContent = description;
+      document.getElementById("modalFeatureTitle").textContent = "特徴";
+
+    // 特徴リストを更新
+    const featureList = document.getElementById('modalFeaturetext');
+    featureList.innerHTML = ""; // 一度クリア
+    features.forEach(f => {
+      const li = document.createElement('li');
+      li.textContent = f;
+      featureList.appendChild(li);
+    });
+
+    currentItem = name;
+    modal.show();
+  }
+
+    document.getElementById('makeButton').addEventListener('click', () => {
+      location.href = `/aidea/design/?item=${encodeURIComponent(currentItem)}`;
+    });
+  </script>
 </body>
 </html>
