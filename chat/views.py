@@ -115,6 +115,7 @@ def delete_chat_room(request, room_name):
 
     return render(request, "chat/confirm_delete.html", {"room": room})
 
+# 進行中のチャットルームをチェック
 @login_required
 def active_chat_rooms(request):
     user = request.user
@@ -159,7 +160,7 @@ def scout_notifications(request):
     received_scouts = ScoutOffer.objects.filter(creator=request.user, accepted=False)
     return render(request, "chat/scout_notice.html", {"received_scouts": received_scouts})
 
-
+# スカウト受信
 @login_required
 def accept_scout(request, scout_id):
     scout = get_object_or_404(ScoutOffer, id=scout_id, creator=request.user)
