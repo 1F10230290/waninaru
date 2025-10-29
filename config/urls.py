@@ -27,6 +27,7 @@ urlpatterns = [
     path('aidea/',include('aidea.urls')),
     path('accounts/', include('accounts.urls')),
     path('chat/', include('chat.urls')),
+    path('product/', include('product.urls')),
     path('', views.home, name='home'),
 ]
 
