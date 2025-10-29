@@ -10,7 +10,6 @@ env/
 .venv/
 ENV/
 venv/lib/
-venv/bin/
 venv/Include/
 venv/Lib/
 
