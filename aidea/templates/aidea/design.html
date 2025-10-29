@@ -15,46 +15,66 @@
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 </head>
 <body>
-    <h1>{{item_name}}のデザインを作る</h1>
+    <div class="container-fluid">
+    <h1 class="row justify-content-center my-5">{{item_name}}のデザインを作る</h1>
     <hr>
-    <h2>デフォルトデザインのダウンロード</h2>
-    <p>デザイン用の{{item_name}}の下絵をダウンロードできます。</p>
-
-    <a href="{% static 'aidea/images/owan_base.png' %}" download="owan_base.png">
-        <button>お椀のベース画像をダウンロード</button>
-    </a>
-
-        <a href="{% static 'aidea/images/osara_base.png' %}" download="osara_base.png">
-        <button>お皿のベース画像をダウンロード</button>
-    </a>
+    <h2 class="row justify-content-center my-5">デフォルトデザインのダウンロード</h2>
+    <p class="row justify-content-center">デザイン用の{{item_name}}の下絵をダウンロードできます。</p>
 
     
-    <h2>注意点</h2>
-    <ul>
+    <a href="{% static 'aidea/images/owan_base.png' %}" download="owan_base.png">
+        <div class="row">
+            <button class="offset-3 col-6 py-1 my-1 btn btn-outline-dark">お椀のベース画像をダウンロード</button>
+        </div>
+    </a>
+    
+    
+    <a href="{% static 'aidea/images/osara_base.png' %}" download="osara_base.png">
+        <div class="row">
+            <button class="offset-3 col-6 py-1 my-1 btn btn-outline-dark">お皿のベース画像をダウンロード</button>
+        </div>
+    </a>
+    
+
+    
+    <h2 class="row justify-content-center my-5">注意点</h2>
+    <ul class="row">
         {% for tip in tips %}
-            <li>{{tip}}</li>
+            <li class="offset-1 col-10">{{tip}}</li>
         {% endfor%}
     </ul>
     <!--推奨質問のボタン-->
-    <button class="suggest-btn" data-command="famous_design" data-item-name="{{ item_name }}">代表的な模様やモチーフは？</button>
-    <button class="suggest-btn" data-command="easy_design" data-item-name="{{ item_name }}">初心者向けの簡単なデザイン案は？</button>
-    <button class="suggest-btn" data-command="drawing_tips" data-item-name="{{ item_name }}">描き方のコツは？</button>
-    <button class="suggest-btn" data-command="avoid_design" data-item-name="{{ item_name }}">デザインで避けるべきことは？</button>
+    <button class="suggest-btn btn btn-outline-dark" data-command="famous_design" data-item-name="{{ item_name }}">代表的な模様やモチーフは？</button>
+    <button class="suggest-btn btn btn-outline-dark" data-command="easy_design" data-item-name="{{ item_name }}">初心者向けの簡単なデザイン案は？</button>
+    <button class="suggest-btn btn btn-outline-dark" data-command="drawing_tips" data-item-name="{{ item_name }}">描き方のコツは？</button>
+    <button class="suggest-btn btn btn-outline-dark" data-command="avoid_design" data-item-name="{{ item_name }}">デザインで避けるべきことは？</button>
     
     <!--チャット欄-->
     <div id="chat-box"></div>
 
     <!--自由入力-->
     <input type="text"  id="free-input" placeholder="メッセージを入力">
-    <button id="free-btn">送信</button>
-
+    <div class="row justify-content-end">
+    <button id="free-btn" class="btn btn-dark offset-10 col-2 m-2 py-1">送信</button>
+    </div>
+    
     <div id="result"></div>
+    
 
     <hr>
-    <h2>デザインのフィードバック</h2>
-    <p>描いたデザインのイラストをアップロードして、AIからフィードバックをもらいましょう。</p>
-    <input type="file" id="feedback-image-upload" accept="image/*">
-    <button id="get-feedback-btn">フィードバックをもらう</button>
+    <h2 class="row justify-content-center my-5">デザインのフィードバック</h2>
+    <p class="row justify-content-center">描いたデザインのイラストをアップロードして、AIからフィードバックをもらいましょう。</p>
+    <div class="row">
+        <div class="offset-4 col-4">
+        <input type="file" id="feedback-image-upload" accept="image/*">
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="offset-4 col-4">
+            <button id="get-feedback-btn" class="m-2 btn btn-danger">フィードバックをもらう</button>
+        </div>
+    </div>
     
     <div id="feedback-loading" style="display: none; margin-top: 10px;">
         <p>🎨 AIがあなたのデザインを分析しています...</p>
@@ -64,5 +84,6 @@
 
     <hr>
     <h2>デザインの投稿</h2>
+    </div>
 </body>
 </html>
