@@ -34,3 +34,44 @@
 body{
     background-color: #ccc;
 }
+
+img{
+    width: 20%;
+}
+
+html, body{
+    height:100%;
+    width:100%;
+    padding:0%;
+    margin:0%;
+}
+
+.sidebar{
+    top:0;
+    left:-100%;
+    height:100%;
+    transition:all .35s ease;
+}
+
+.sidebar-toggle{
+    cursor: pointer;
+}
+
+<<<<<<< HEAD
+.logo{
+    width:45px;
+    height:45px;
+}
+=======
+#idea_upload_txt {
+    height: 300px;
+    width: 500px;
+    border: 1px solid #ccc;
+    padding: 10px;
+    background-color: #f1f1f1;
+}
+
+#modalFeaturetext{
+    font-size: 30px;
+}
+>>>>>>> origin/yuta
