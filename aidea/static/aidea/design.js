@@ -164,13 +164,22 @@ document.addEventListener("DOMContentLoaded", () => {
     const feedbackResult = document.getElementById("feedback-result");
     const feedbackLoading = document.getElementById("feedback-loading");
 
+    let feedbackUsed = false;
+
     getFeedbackBtn.addEventListener("click", async () => {
+        if(feedbackUsed){
+            alert("フィードバックは1回のみ行えます。");
+            return;
+        }
+
         console.log("フィードバックボタンがクリックされました！");
         const file = feedbackImageUpload.files[0];
         if (!file) {
             alert("フィードバックを受けたいデザイン画像をアップロードしてください。");
             return;
         }
+
+        feedbackUsed = true;
         
         // 工芸品名を data-item-name 属性から取得
         const itemName = document.querySelector(".suggest-btn").dataset.itemName || "日本の伝統工芸品";
@@ -206,8 +215,8 @@ document.addEventListener("DOMContentLoaded", () => {
             feedbackResult.textContent = "エラーが発生しました。もう一度試してください。";
         } finally {
             // UIを元の状態に戻す
-            getFeedbackBtn.disabled = false;
             feedbackLoading.style.display = 'none';
+            getFeedbackBtn.disabled = true;
         }
     });
 });
