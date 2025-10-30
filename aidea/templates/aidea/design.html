@@ -1,5 +1,7 @@
 {% load static %} 
 {% csrf_token %}
+{% autoescape off %}
+
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -91,23 +93,26 @@
 -->
 
     
-    <h2 class="row justify-content-center my-5">注意点</h2>
+    <h2 class="row justify-content-center my-5">デザインする上での注意点</h2>
     <div id="design_point">
     <ul class="row">
         {% for tip in tips %}
-            <li class="offset-1 col-10">{{tip}}</li>
-        {% endfor%}
+        <li>{{ tip }}</li>
+        {% endfor %}
+        {% endautoescape %}
     </ul>
     </div>
-
-    <!--推奨質問のボタン-->
-    <button class="suggest-btn btn btn-outline-dark" data-command="famous_design" data-item-name="{{ item_name }}">代表的な模様やモチーフは？</button>
-    <button class="suggest-btn btn btn-outline-dark" data-command="easy_design" data-item-name="{{ item_name }}">初心者向けの簡単なデザイン案は？</button>
-    <button class="suggest-btn btn btn-outline-dark" data-command="drawing_tips" data-item-name="{{ item_name }}">描き方のコツは？</button>
-    <button class="suggest-btn btn btn-outline-dark" data-command="avoid_design" data-item-name="{{ item_name }}">デザインで避けるべきことは？</button>
     
     <!--チャット欄-->
     <div id="chat-box"></div>
+
+    <!--推奨質問のボタン-->
+    <div id="default_question">
+    <button class="suggest-btn btn btn-outline-dark fs-5" data-command="famous_design" data-item-name="{{ item_name }}">代表的な模様やモチーフは？</button>
+    <button class="suggest-btn btn btn-outline-dark fs-5" data-command="easy_design" data-item-name="{{ item_name }}">初心者向けの簡単なデザイン案は？</button>
+    <button class="suggest-btn btn btn-outline-dark fs-5" data-command="drawing_tips" data-item-name="{{ item_name }}">描き方のコツは？</button>
+    <button class="suggest-btn btn btn-outline-dark fs-5" data-command="avoid_design" data-item-name="{{ item_name }}">デザインで避けるべきことは？</button>
+    </div>
 
     <!--自由入力-->
     <input type="text"  id="free-input" placeholder="メッセージを入力">
@@ -120,10 +125,12 @@
 
     <hr>
     <h2 class="row justify-content-center my-5">デザインのフィードバック</h2>
-    <p class="row justify-content-center">描いたデザインのイラストをアップロードして、AIからフィードバックをもらいましょう。</p>
+    <p class="row justify-content-center fs-5">描いたデザインのイラストをアップロードして、AIからフィードバックをもらいましょう。</p>
+   
     <div class="row">
-        <div class="offset-4 col-4">
-        <input type="file" id="feedback-image-upload" accept="image/*">
+        <div class="offset-4 col-4 text-center">
+        <input type="file" id="feedback-image-upload" accept="image/*" class="form-control">
+        <img id="preview-image" src="" alt="プレビュー画像" class="img-fluid mt-3 mx-auto" style="display:none; max-height: 1024px; border-radius: 10px;">
         </div>
     </div>
 
@@ -137,7 +144,7 @@
         <p>🎨 AIがあなたのデザインを分析しています...</p>
     </div>
     <div id="feedback-result">
-        吾輩は猫である。名前はまだ無い。どこで生れたかとんと見当がつかぬ。何でも薄暗いじめじめした所でニャーニャー泣いていた事だけは記憶している。吾輩はここで始めて人間というものを見た。しかもあとで聞くとそれは書生という人間中で一番獰悪な種族であったそうだ。この書生というのは時々我々を捕えて煮て食うという話である。しかしその当時は何という考もなかったから別段恐しいとも思わなかった。
+        
     </div>
 
     <!--<hr>

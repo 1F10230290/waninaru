@@ -163,9 +163,37 @@ document.addEventListener("DOMContentLoaded", () => {
     const getFeedbackBtn = document.getElementById("get-feedback-btn");
     const feedbackResult = document.getElementById("feedback-result");
     const feedbackLoading = document.getElementById("feedback-loading");
+    const previewImage = document.getElementById("preview-image");
 
     let feedbackUsed = false;
 
+    feedbackImageUpload.addEventListener('change', (e) => {
+        // 選択されたファイルを取得
+        const file = e.target.files[0];
+
+        // ファイルが選択されている場合
+        if (file) {
+            // FileReaderオブジェクトを作成してファイルを読み込む
+            const reader = new FileReader();
+
+            // ファイルの読み込みが完了したときの処理
+            reader.onload = (loadEvent) => {
+                // 読み込んだ画像データ（Data URL）をimgタグのsrc属性に設定
+                previewImage.src = loadEvent.target.result;
+                
+                // imgタグを表示状態にする (style="display:none;" を解除)
+                previewImage.style.display = 'block';
+            };
+
+            // ファイルをData URLとして読み込む
+            reader.readAsDataURL(file);
+        } else {
+            // ファイルが選択されなかった場合（キャンセルなど）は、プレビューを隠す
+            previewImage.src = '';
+            previewImage.style.display = 'none';
+        }
+    });
+    
     getFeedbackBtn.addEventListener("click", async () => {
         if(feedbackUsed){
             alert("フィードバックは1回のみ行えます。");
