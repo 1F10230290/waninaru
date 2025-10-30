@@ -73,3 +73,21 @@ html, body{
 #modalFeaturetext{
     font-size: 30px;
 }
+
+#feedback-result{
+    height: 250px;
+    overflow-y: auto;
+    border: 1px solid #ccc;
+    padding: 10px;
+    background-color: #f9f9f9;
+    font-size: 20px;
+}
+
+#design_point{
+    font-size: 20px;
+    margin-bottom: 30px;
+}
+
+#finish-btn{
+    font-size: 30px;
+}

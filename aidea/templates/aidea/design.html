@@ -71,7 +71,8 @@
     <div class="container-fluid">
     <h1 class="row justify-content-center my-5">{{item_name}}のデザインを作る</h1>
     <hr>
-    <h2 class="row justify-content-center my-5">デフォルトデザインのダウンロード</h2>
+    <!--<h2 class="row justify-content-center my-5">デフォルトデザインのダウンロード</h2>
+    
     <p class="row justify-content-center">デザイン用の{{item_name}}の下絵をダウンロードできます。</p>
 
     
@@ -87,15 +88,18 @@
             <button class="offset-3 col-6 py-1 my-1 btn btn-outline-dark">お皿のベース画像をダウンロード</button>
         </div>
     </a>
-    
+-->
 
     
     <h2 class="row justify-content-center my-5">注意点</h2>
+    <div id="design_point">
     <ul class="row">
         {% for tip in tips %}
             <li class="offset-1 col-10">{{tip}}</li>
         {% endfor%}
     </ul>
+    </div>
+
     <!--推奨質問のボタン-->
     <button class="suggest-btn btn btn-outline-dark" data-command="famous_design" data-item-name="{{ item_name }}">代表的な模様やモチーフは？</button>
     <button class="suggest-btn btn btn-outline-dark" data-command="easy_design" data-item-name="{{ item_name }}">初心者向けの簡単なデザイン案は？</button>
@@ -125,17 +129,18 @@
 
     <div class="row">
         <div class="offset-4 col-4 text-center">
-            <button id="get-feedback-btn" class="m-2 btn btn-outline-danger">フィードバックをもらう</button>
+            <button id="get-feedback-btn" class="m-4 btn btn-outline-danger">フィードバックをもらう</button>
         </div>
     </div>
     
     <div id="feedback-loading" style="display: none; margin-top: 10px;">
         <p>🎨 AIがあなたのデザインを分析しています...</p>
     </div>
-    <div id="feedback-result" style="margin-top: 10px; border: 1px solid #eee; padding: 10px; border-radius: 5px; background: #f9f9f9;">
-        </div>
+    <div id="feedback-result">
+        吾輩は猫である。名前はまだ無い。どこで生れたかとんと見当がつかぬ。何でも薄暗いじめじめした所でニャーニャー泣いていた事だけは記憶している。吾輩はここで始めて人間というものを見た。しかもあとで聞くとそれは書生という人間中で一番獰悪な種族であったそうだ。この書生というのは時々我々を捕えて煮て食うという話である。しかしその当時は何という考もなかったから別段恐しいとも思わなかった。
+    </div>
 
-    <hr>
+    <!--<hr>
     <h2 class="row justify-content-center my-5">アイデアの投稿</h2>
     <div class="row">
     <div class="offset-1 col-5">
@@ -149,7 +154,31 @@
     </div>
     </div>
     <br>
-    <button id="idea_upload" class="offset-3 col-6 py-1 my-3 btn btn-danger">アイデアを投稿する</button>
+    <button id="idea_upload" class="offset-3 col-6 py-1 my-3 btn btn-danger">アイデアを投稿する</button>-->
+    <hr>
+       <div class="offset-3 col-6 text-center">
+            <button type = "button" id="finish-btn" class="m-4 btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#endModal">体験終了</button>
+        </div>
 
+        <div class="modal fade" id="endModal" tabindex="-1" aria-labelledby="endModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="endModalLabel">体験終了</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="閉じる"></button>
+                    </div>
+
+                    <div class="modal-body text-center">
+                        <p class="fs-4 mb-3">お疲れ様でした！</p>
+                        <p class="fs-5">体験はいかがでしたか？ぜひアンケートにご協力ください。</p>
+                        <img src="{% static 'aidea/images/QR_fes.png' %}" alt="仮画像" class="w-50 h-50 pb-3 img"></br>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">閉じる</button>
+                    </div>
+                </div>
+            </div>
+        </div>
 </body>
 </html>
