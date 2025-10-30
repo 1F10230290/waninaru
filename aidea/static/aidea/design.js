@@ -131,13 +131,13 @@ document.addEventListener("DOMContentLoaded", () => {
             else if (command === "drawing_tips") {
                 //「描き方のコツは？」 (既存のプロンプト)
                 finalPrompt = `# 指示
-                私はアマチュアクリエイターです。「${itemName}」の表面に描くためのデザイン案を、立体的なイラストとして描きたいです。
+                私はデザイン初心者です。「${itemName}」の表面に描くためのデザイン案を、立体的なイラストとして描きたいです。
                 既に、${itemName}を模った枠線は用意してあり、塗り絵の状態です。
                 プロのデザイナーが初心者に教えるように、専門用語を使わずにステップバイステップ形式でアドバイスしてください。
 
                 # 守ってほしい手順
                 - **ステップ1**では、まず
-                - その後、構図の取り方や、曲面に模様をうまく乗せるコツなどを重点的に教えてください。また、${itemName}で可能な表現についても教えて下さい。
+                - その後、構図の取り方のコツなどを重点的に教えてください。また、${itemName}で可能な表現についても教えて下さい。
                 - あなたが持つべき役割や制約条件は、システムプロンプトの指示に厳密に従ってください。
                 `;
             } 
@@ -193,7 +193,7 @@ document.addEventListener("DOMContentLoaded", () => {
             previewImage.style.display = 'none';
         }
     });
-    
+
     getFeedbackBtn.addEventListener("click", async () => {
         if(feedbackUsed){
             alert("フィードバックは1回のみ行えます。");
