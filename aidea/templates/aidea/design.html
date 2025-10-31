@@ -84,19 +84,20 @@
 
     <hr>
     <h2 class="row justify-content-center my-5">アイデアの投稿</h2>
+    <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
     <div class="row">
-    <div class="offset-1 col-5">
-    <h3>デザインの画像ファイル</h3>
-    <input type="file" id="idea_upload_img" accept="image/*">
-    <br>
+        <div class="offset-1 col-5">
+            <h3>デザインの画像ファイル</h3>
+            <input type="file" name="image" accept="image/*">
+        </div>
+        <div class="col-6">
+            <h3>デザインの説明</h3><br>
+            <textarea name="description"></textarea>
+        </div>
     </div>
-    <div class="col-6">
-    <h3>デザインの説明</h3><br>
-    <textarea id ="idea_upload_txt"></textarea>
-    </div>
-    </div>
-    <br>
-    <button id="idea_upload" class="offset-3 col-6 py-1 my-3 btn btn-danger">アイデアを投稿する</button>
+    <button type="submit" class="offset-3 col-6 py-1 my-3 btn btn-danger">アイデアを投稿する</button>
+</form>
 
 </body>
 </html>

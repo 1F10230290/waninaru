@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 import os
@@ -10,6 +10,7 @@ import base64
 from django.conf import settings
 from PIL import Image
 import io
+from .models import DesignIdea
 
 load_dotenv()  # .envからAPIキーを読み込む
 
@@ -174,11 +175,10 @@ def get_feedback(request):
 
 #デザインページ用のビュー
 def design(request):
-    item_name = request.GET.get('item', '') # '輪島塗のお椀' などがここに入る
+    item_name = request.GET.get('item', '')  # '輪島塗のお椀' など
     
-    tips = [] # 注意点リストを初期化
+    tips = []  # 注意点リスト初期化
     
-    # item_name に応じて注意点を分岐
     if '輪島塗' in item_name:
         tips = [
             "下地に「地の粉（珪藻土）」を用いるため、やや厚みと重みがあり、立体的な彫りや沈金（金粉彫刻）を活かすデザインが映える。",
@@ -204,15 +204,26 @@ def design(request):
             "柄を全面に敷き詰めると重く見えることがあるので、中央にモチーフを置いて余白でバランスを取ると上品に仕上がる。"
         ]
     else:
-        # デフォルトの注意点
-        tips = [
-            "工芸品の特性を活かしたデザインを心がけましょう。"
-        ]
+        tips = ["工芸品の特性を活かしたデザインを心がけましょう。"]
 
+    # POSTリクエスト時はアイデア投稿を処理
+    if request.method == "POST":
+        image = request.FILES.get('image')
+        description = request.POST.get('description', '')
+        if image and description:
+            DesignIdea.objects.create(image=image, description=description)
+            return redirect(request.path + f'?item={item_name}')  # 投稿後にリロードしてGETに戻す
 
-# テンプレートに渡すコンテキストに 'tips' を追加
+    # 投稿済みアイデアも取得して表示可能にする
+    ideas = DesignIdea.objects.all().order_by('-created_at')
+
     context = {
         'item_name': item_name,
-        'tips': tips  # 作成した注意点リストを渡す
+        'tips': tips,
+        'ideas': ideas  # 投稿一覧をテンプレートで表示可能
     }
-    return render(request, 'aidea/design.html', context) # context を渡す
+    return render(request, 'aidea/design.html', context)
+
+def idea_list(request):
+    ideas = DesignIdea.objects.all().order_by('-created_at')
+    return render(request, 'aidea/list.html', {'ideas': ideas})
