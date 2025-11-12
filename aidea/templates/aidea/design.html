@@ -1,5 +1,7 @@
 {% load static %} 
 {% csrf_token %}
+{% autoescape off %}
+
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -71,7 +73,8 @@
     <div class="container-fluid">
     <h1 class="row justify-content-center my-5">{{item_name}}のデザインを作る</h1>
     <hr>
-    <h2 class="row justify-content-center my-5">デフォルトデザインのダウンロード</h2>
+    <!--<h2 class="row justify-content-center my-5">デフォルトデザインのダウンロード</h2>
+    
     <p class="row justify-content-center">デザイン用の{{item_name}}の下絵をダウンロードできます。</p>
 
     
@@ -87,23 +90,29 @@
             <button class="offset-3 col-6 py-1 my-1 btn btn-outline-dark">お皿のベース画像をダウンロード</button>
         </div>
     </a>
-    
+-->
 
     
-    <h2 class="row justify-content-center my-5">注意点</h2>
+    <h2 class="row justify-content-center my-5">デザインする上での注意点</h2>
+    <div id="design_point">
     <ul class="row">
         {% for tip in tips %}
-            <li class="offset-1 col-10">{{tip}}</li>
-        {% endfor%}
+        <li>{{ tip }}</li>
+        {% endfor %}
+        {% endautoescape %}
     </ul>
-    <!--推奨質問のボタン-->
-    <button class="suggest-btn btn btn-outline-dark" data-command="famous_design" data-item-name="{{ item_name }}">代表的な模様やモチーフは？</button>
-    <button class="suggest-btn btn btn-outline-dark" data-command="easy_design" data-item-name="{{ item_name }}">初心者向けの簡単なデザイン案は？</button>
-    <button class="suggest-btn btn btn-outline-dark" data-command="drawing_tips" data-item-name="{{ item_name }}">描き方のコツは？</button>
-    <button class="suggest-btn btn btn-outline-dark" data-command="avoid_design" data-item-name="{{ item_name }}">デザインで避けるべきことは？</button>
+    </div>
     
     <!--チャット欄-->
     <div id="chat-box"></div>
+
+    <!--推奨質問のボタン-->
+    <div id="default_question">
+    <button class="suggest-btn btn btn-outline-dark fs-5" data-command="famous_design" data-item-name="{{ item_name }}">代表的な模様やモチーフは？</button>
+    <button class="suggest-btn btn btn-outline-dark fs-5" data-command="easy_design" data-item-name="{{ item_name }}">初心者向けの簡単なデザイン案は？</button>
+    <button class="suggest-btn btn btn-outline-dark fs-5" data-command="drawing_tips" data-item-name="{{ item_name }}">描き方のコツは？</button>
+    <button class="suggest-btn btn btn-outline-dark fs-5" data-command="avoid_design" data-item-name="{{ item_name }}">デザインで避けるべきことは？</button>
+    </div>
 
     <!--自由入力-->
     <input type="text"  id="free-input" placeholder="メッセージを入力">
@@ -116,26 +125,29 @@
 
     <hr>
     <h2 class="row justify-content-center my-5">デザインのフィードバック</h2>
-    <p class="row justify-content-center">描いたデザインのイラストをアップロードして、AIからフィードバックをもらいましょう。</p>
+    <p class="row justify-content-center fs-5">描いたデザインのイラストをアップロードして、AIからフィードバックをもらいましょう。</p>
+   
     <div class="row">
-        <div class="offset-4 col-4">
-        <input type="file" id="feedback-image-upload" accept="image/*">
+        <div class="offset-4 col-4 text-center">
+        <input type="file" id="feedback-image-upload" accept="image/*" class="form-control">
+        <img id="preview-image" src="" alt="プレビュー画像" class="img-fluid mt-3 mx-auto" style="display:none; max-height: 1024px; border-radius: 10px;">
         </div>
     </div>
 
     <div class="row">
         <div class="offset-4 col-4 text-center">
-            <button id="get-feedback-btn" class="m-2 btn btn-outline-danger">フィードバックをもらう</button>
+            <button id="get-feedback-btn" class="m-4 btn btn-outline-danger">フィードバックをもらう</button>
         </div>
     </div>
     
     <div id="feedback-loading" style="display: none; margin-top: 10px;">
         <p>🎨 AIがあなたのデザインを分析しています...</p>
     </div>
-    <div id="feedback-result" style="margin-top: 10px; border: 1px solid #eee; padding: 10px; border-radius: 5px; background: #f9f9f9;">
-        </div>
+    <div id="feedback-result">
+        
+    </div>
 
-    <hr>
+    <!--<hr>
     <h2 class="row justify-content-center my-5">アイデアの投稿</h2>
     <div class="row">
     <div class="offset-1 col-5">
@@ -149,7 +161,32 @@
     </div>
     </div>
     <br>
-    <button id="idea_upload" class="offset-3 col-6 py-1 my-3 btn btn-danger">アイデアを投稿する</button>
+    <button id="idea_upload" class="offset-3 col-6 py-1 my-3 btn btn-danger">アイデアを投稿する</button>-->
+    <hr>
+       <div class="offset-3 col-6 text-center">
+            <button type = "button" id="finish-btn" class="m-4 btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#endModal">体験終了</button>
+        </div>
 
+        <div class="modal fade" id="endModal" tabindex="-1" aria-labelledby="endModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="endModalLabel">体験終了</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="閉じる"></button>
+                    </div>
+
+                    <div class="modal-body text-center">
+                        <p class="fs-4 mb-3">お疲れ様でした！</p>
+                        <p class="fs-5">体験はいかがでしたか？ぜひアンケートにご協力ください。</p>
+                        <img src="{% static 'aidea/images/QR_fes.png' %}" alt="仮画像" class="w-50 h-50 pb-3 img"></br>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                        onclick="window.location.href='{% url 'index' %}'">閉じる</button>
+                    </div>
+                </div>
+            </div>
+        </div>
 </body>
 </html>
