@@ -19,6 +19,15 @@
             {% endfor %}
         </p>
 
+        <!-- 役割選択 -->
+        <p>
+            {{ form.role.label_tag }}<br>
+            {{ form.role }}<br>
+            {% for error in form.role.errors %}
+                <span style="color:red">{{ error }}</span><br>
+            {% endfor %}
+        </p>
+
         <!-- アイコン -->
         <p>
             <label for="id_icon">アイコン画像：</label><br>
