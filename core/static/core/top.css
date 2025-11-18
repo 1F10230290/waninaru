@@ -1,0 +1,21 @@
+.area {
+    /* ここに正しいCSSプロパティを記述 */
+    font-size: 58px; /* 例 */
+}
+
+.area2 {
+    /* ここに正しいCSSプロパティを記述 */
+    font-size: 45px; /* 例 */
+}
+
+/* フェードアウト対象の要素にトランジション設定を追加 */
+#splash-content {
+    /* opacity（不透明度）が変化する際、2秒かけて滑らかに変化させる設定 */
+    transition: opacity 3s ease-in-out;
+}
+
+/* フェードアウト用のクラス */
+.fade-out {
+    /* 不透明度を0にして完全に透明にする */
+    opacity: 0;
+}

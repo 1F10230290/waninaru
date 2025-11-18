@@ -1,4 +1,4 @@
-#!/home/iniad/Irokumo/venv/bin/python
+#!/home/iniad/Irokumo/venv/bin/python3
 # -*- coding: utf-8 -*-
 import re
 import sys
