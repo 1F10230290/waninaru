@@ -4,6 +4,10 @@ from .forms import SignUpForm, ProfileForm, CraftsmanProfileForm
 from .models import Profile, CraftsmanProfile
 from django.contrib.auth.views import LoginView
 
+#トップページのビュー関数
+def enter(request):  #request：Chromeなどのウェブブラウザからサーバーに「ぺージください」とリクエストする
+    return render(request, 'accounts/enter.html')  #テンプレート(request)やデータからページ(html)を作って返す
+
 # サインアップ用ビュー
 def signup_view(request):
     if request.method == 'POST':
@@ -86,11 +90,6 @@ def register_craftsman(request):
         form = CraftsmanProfileForm(instance=craftsman_info)
 
     return render(request, 'accounts/register_craftsman.html', {'form': form})
-
-def craftsman_list_view(request):
-    # role が 'craftsman' のユーザーのみ取得
-    craftsmen = Profile.objects.filter(role='craftsman')
-    return render(request, 'accounts/craftsman_list.html', {'craftsmen': craftsmen})
 
 # ユーザー一覧機能
 def user_list_view(request):

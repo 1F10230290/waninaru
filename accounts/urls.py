@@ -10,11 +10,12 @@ from .views import CustomLoginView
 
 urlpatterns = [
     # ユーザー関連
+    path('enter/', views.enter, name='enter'),
     path('signup/', views.signup_view, name='signup'),
     path('profile_setup/', views.profile_setup_view, name='profile_setup'),
     path('login/', CustomLoginView.as_view(), name='login'),
     path('mypage/', views.mypage_view, name='mypage'),
-    path('logout/', auth_views.LogoutView.as_view(next_page='/', redirect_field_name=None), name='logout'),
+    path('logout/', auth_views.LogoutView.as_view(next_page='enter', redirect_field_name=None), name='logout'),
     path("users/", views.user_list_view, name="user_list"),
     path('users/<int:user_id>/', views.user_profile_view, name='user_profile'),
 
