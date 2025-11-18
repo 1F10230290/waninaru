@@ -1,6 +1,7 @@
 from django import forms
 from .models import Project, CraftTag, Reward
 from django.forms.models import inlineformset_factory
+from django.utils import timezone
 
 # プロジェクト用フォーム
 class ProjectForm(forms.ModelForm):
@@ -23,6 +24,12 @@ class ProjectForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['tags'].queryset = CraftTag.objects.filter(name__in=['有田焼', '江戸切子', '輪島塗'])
+
+    def clean_end_date(self):
+        end_date = self.cleaned_data.get('end_date')
+        if end_date and end_date.date() < timezone.now().date():
+            raise forms.ValidationError("終了日は今日以降の日付を選んでください。")
+        return end_date
 
 # リターン用フォーム
 class RewardForm(forms.ModelForm):

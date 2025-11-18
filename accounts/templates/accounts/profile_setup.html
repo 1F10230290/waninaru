@@ -22,9 +22,6 @@
         <!-- 役割選択 -->
         <p>
             {{ form.role.label_tag }}<br>
-<<<<<<< HEAD
-            {{ form.role }}<br>
-=======
             {% if form.instance.role %}
                 {{ form.instance.get_role_display }}
                 <input type="hidden" name="{{ form.role.name }}" value="{{ form.instance.role }}">
@@ -32,7 +29,6 @@
                 {{ form.role }}
             {% endif %}
 
->>>>>>> main
             {% for error in form.role.errors %}
                 <span style="color:red">{{ error }}</span><br>
             {% endfor %}

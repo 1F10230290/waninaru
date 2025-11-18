@@ -34,7 +34,22 @@
             {% endfor %}
             </p>
         </li>
+    {% empty %}
+        <li>現在プロジェクトはありません。</li>
     {% endfor %}
 </ul>
+
+{% if user.is_authenticated %}
+        {% if user.profile.role == "supporter" %}
+            <p><a href="{% url 'supporter_dashboard' %}">トップに戻る</a></p>
+        {% elif user.profile.role == "creator" %}
+            <p><a href="{% url 'creator_dashboard' %}">トップに戻る</a></p>
+        {% elif user.profile.role == "craftsman" %}
+            <p><a href="{% url 'craftsman_dashboard' %}">トップに戻る</a></p>
+        {% endif %}
+    {% else %}
+        <p><a href="{% url 'home' %}">トップに戻る</a></p>
+    {% endif %}
+
 </body>
 </html>

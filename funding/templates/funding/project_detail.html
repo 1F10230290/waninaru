@@ -18,7 +18,17 @@
 <p>支援者数: {{ project.supporter_count }}</p>
 <p>いいね数: <span id="like-count">{{ project.like_count }}</span></p>
 <p>残り日数: {{ project.days_left }}日</p>
-<p>作成者: {{ project.created_by.username }}</p>
+<p>作成者:
+    {% if project.created_by.profile %}
+        {% if project.created_by.profile.icon %}
+            <img src="{{ project.created_by.profile.icon.url }}" alt="アイコン" width="30" style="border-radius:50%;">
+        {% endif %}
+        {{ project.created_by.profile.name|default:project.created_by.email }}
+    {% else %}
+        {{ project.created_by.email }}
+    {% endif %}
+</p>
+
 
 <p>タグ:
 {% for tag in project.tags.all %}
@@ -54,6 +64,15 @@
     <li>まだリターンが設定されていません</li>
 {% endfor %}
 </ul>
+
+{% if user.is_authenticated and user == project.created_by %}
+<form action="{% url 'project_delete' project.pk %}" method="POST" style="margin-top:10px;">
+    {% csrf_token %}
+    <button type="submit" onclick="return confirm('本当に削除しますか？');">
+        🗑️ プロジェクトを削除
+    </button>
+</form>
+{% endif %}
 
 <script>
 document.addEventListener("DOMContentLoaded", () => {

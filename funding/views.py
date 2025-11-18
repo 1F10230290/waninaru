@@ -124,3 +124,18 @@ def project_create(request):
 def thanks(request, pk):
     project = get_object_or_404(Project, pk=pk)
     return render(request, 'funding/thanks.html', {'project': project})
+
+# 投稿削除
+@login_required
+def project_delete(request, pk):
+    project = get_object_or_404(Project, pk=pk)
+
+    # 作成者以外は削除不可
+    if request.user != project.created_by:
+        return redirect('project_detail', pk=project.pk)
+
+    if request.method == 'POST':
+        project.delete()
+        return redirect('project_list')  # 削除後のリダイレクト先
+
+    return redirect('project_detail', pk=project.pk)
