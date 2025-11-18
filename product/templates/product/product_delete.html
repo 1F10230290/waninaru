@@ -1,0 +1,11 @@
+{% extends './base.html' %}
+{% block content %}
+<h1>商品削除</h1>
+<p>'{{ product.name }}' を削除しますか？</p>
+<form action='' method='post'>{% csrf_token %}
+    <button type='submit' class='btn btn-danger'>削除する</button>
+</form>
+<div>
+    <a href="{% url 'product:product_list' %}">&lt; 一覧に戻る</a>
+</div>
+{% endblock %}

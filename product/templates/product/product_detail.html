@@ -1,0 +1,19 @@
+{% extends './base.html' %}
+{% block content %}
+<h1>{{ product.name }}</h1>
+
+<div>
+    <p><strong>カテゴリ:</strong> {{ product.category.name }}</p>
+    <p><strong>価格:</strong> ¥{{ product.price }}</p>
+    <p><strong>説明:</strong> {{ product.description }}</p>
+    {% if product.image %}
+        <img src="{{ product.image.url }}" alt="{{ product.name }}" class="img-fluid">
+    {% endif %}
+</div>
+
+<div>
+    <a href="{% url 'product:product_list' %}">一覧に戻る</a>
+    |
+    <a href="{% url 'product:product_delete' product.pk %}" class="text-danger">削除</a>
+</div>
+{% endblock %}

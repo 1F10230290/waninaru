@@ -1,0 +1,13 @@
+{% extends './base.html' %}
+{% block content %}
+<h1>伝統工芸品一覧</h1>
+<ul class="list-group">
+    {% for product in products %}
+        <li class="list-group-item">
+            <a href="{% url 'product:product_detail' product.pk %}">{{ product.name }}</a>
+            - {{ product.category.name }} - ¥{{ product.price }}
+        </li>
+    {% endfor %}
+</ul>
+<a href="{% url 'product:product_form' %}">新規作成</a>
+{% endblock %}

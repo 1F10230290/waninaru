@@ -1,0 +1,11 @@
+{% extends './base.html' %}
+{% block content %}
+<h1>{{ object|yesno:'商品更新,新規作成' }}</h1>
+<form action='' method='post' enctype="multipart/form-data">{% csrf_token %}
+    {{ form.as_p }}
+    <button type='submit' class='btn btn-primary'>{{ object|yesno:'更新,作成' }}</button>
+</form>
+<div>
+    <a href="{% url 'product:product_list' %}">&lt; 一覧に戻る</a>
+</div>
+{% endblock %}

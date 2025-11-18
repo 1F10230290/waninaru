@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from storages.backends.s3boto3 import S3Boto3Storage
+from .managers import CustomUserManager
 
 s3_storage = S3Boto3Storage()
 
@@ -17,6 +18,8 @@ class CustomUser(AbstractUser):
 
     # 新規作成時に必須項目から username を外す
     REQUIRED_FIELDS = []
+
+    objects = CustomUserManager()
 
     # groups と user_permissions の関連名を変更して衝突回避
     groups = models.ManyToManyField(

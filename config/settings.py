@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'introduction',
     'aidea',
     'accounts',
+    'product',
     'storages',
     'chat',
     'channels',
