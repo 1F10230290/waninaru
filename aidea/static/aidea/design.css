@@ -57,12 +57,11 @@ html, body{
     cursor: pointer;
 }
 
-<<<<<<< HEAD
 .logo{
     width:45px;
     height:45px;
 }
-=======
+
 #idea_upload_txt {
     height: 300px;
     width: 500px;
@@ -74,4 +73,3 @@ html, body{
 #modalFeaturetext{
     font-size: 30px;
 }
->>>>>>> origin/yuta

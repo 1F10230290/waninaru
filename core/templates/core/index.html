@@ -1,24 +1,46 @@
 <!DOCTYPE html>
 <html>
+{% load static %}
 <head>
     <title>Introduction</title>
+    <!--boostrap CDN経由 .js-->
+    <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script> -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'core/top.css' %}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 </head>
 <body>
-    <h1>ようこそ waninaru へ</h1>
+    <div id="splash-content" class="text-center vh-100 d-flex flex-column align-items-center justify-content-center">
+    <div class="text-center pt-5"> 
+            <a class="navbar-brand" href="#">
+                <img src="{% static 'aidea/images/waninaru.png' %}" alt="Logo" width="500" height="500" class="me-1 logo">
+            </a>
+        </div>
+        
+        <div class="row">
+            <div class="col-12 text-center area">waninaru</div>
+        </div>
+        
+        <div class="row">
+            <div class="col-12 text-center area2">-あなたの好きが伝統工芸に-</div>
+        </div>
 
-    <!-- ログインしている場合 -->
-    {% if user.is_authenticated %}
-        <p>{{ user.profile.name|default:user.email }} でログイン中です</p>
-        <a href="{% url 'mypage' %}">マイページ</a>
-        <form method="post" action="{% url 'logout' %}">
-            {% csrf_token %}
-            <button type="submit">ログアウト</button>
-        </form>
-    <!-- ログインしていない場合 -->
-    {% else %}
-        <a href="{% url 'signup' %}">アカウント作成</a><br>
-        <a href="{% url 'login' %}">ログイン</a>
-    {% endif %}
-    <p><a href="{% url 'user_list' %}">ユーザー一覧</a></p>
+    </div>
+    
+    <script>
+    const content = document.getElementById('splash-content');
+    const fadeDuration = 3000;  // CSSのトランジション時間(2秒)に合わせる
+    const totalDelay = 4000;    // フェードアウト完了後、合計3秒後に遷移
+
+    // 1. ページ表示後すぐにフェードアウトクラスを追加してアニメーションを開始
+    setTimeout(function() {
+        content.classList.add('fade-out');
+    }, 100); // ほぼ即時 (100ms) に開始
+
+    // 2. 3秒後（フェードアウトが完全に終わった後）に画面遷移を実行
+    setTimeout(function() {
+        window.location.href = "{% url 'enter' %}"; 
+    }, totalDelay); 
+    </script>
 </body>
 </html>
